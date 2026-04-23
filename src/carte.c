@@ -37,7 +37,7 @@ void melanger(cartes tab[], int taille){
     }
 }
 
-int effetNumero(int numero,char *bonus, int score){
+int Effets(int numero,char *bonus, int score){
     score += numero;
     
     if(strcmp(bonus, "x2") == 0){
