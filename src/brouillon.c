@@ -1,4 +1,5 @@
 printf("Statistiques de la pioche :\n--------------------------------\n"); //de la ligne 186 à 193
+printf("\n");
 int total;
 if (i < 2) {
     total = 1;
