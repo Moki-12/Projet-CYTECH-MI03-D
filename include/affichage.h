@@ -4,8 +4,8 @@
 #include "cartes.h"
 #include "joueur.h"
 
-
-void affichagePioche(Carte tab[], int taille);
+void corrigeTab(cartes tab[]);
+void affichagePioche(cartes tab[], int taille);
 void affichageMain(Joueur j);
 void affichageScores(Joueur joueurs[], int nb_joueur);
 void affichageTour(int numeroTour);
