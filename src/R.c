@@ -148,8 +148,9 @@ void manche(cartes tab[], int nb_joueur, joueur joueurs[], int *taille, int *der
             }
 
             do {
+                printf("\n");
                 printf ("------------Au tour de %s------------\n", joueurs[j].pseudo);
-                
+                printf("\n");
                 if (joueurs[j].nbCartesManche >= 1) {
 
     printf("Vos cartes en main :\n");
@@ -170,7 +171,7 @@ void manche(cartes tab[], int nb_joueur, joueur joueurs[], int *taille, int *der
     printf("\n");
                     //cartesPiochées++;
 
-                   // printf ("\n");
+                    printf ("\n");
                     printf ("Votre score potentiel : %d\n----------------------------\n",
                             joueurs[j].score_pot);
 
@@ -184,6 +185,7 @@ void manche(cartes tab[], int nb_joueur, joueur joueurs[], int *taille, int *der
                     }
                         
                     printf ("Statistiques de la pioche :\n--------------------------------\n");
+                    printf("\n");
                     printf ("[0] : %d/1 ", compteur[0].numero);
 
                     for (int w=1; w<13; w++){
