@@ -1,3 +1,8 @@
+#include "carte.h"     
+#include <string.h>    
+#include <stdlib.h>
+
+
 void AfficheTab(cartes tab[]){
     int i = 0;
     tab[i].numero = 0;
@@ -59,14 +64,16 @@ int effetNumero(int numero,char *bonus, int score){
 
 
 
-int carteExiste(cartes tab[], int tailleMain, cartes carte){
-    for(int i = 0; i < tailleMain; i++){
-
-        if(tab[i].numero == carte.numero){   //  strcmp(tab[i].bonus, carte.bonus) == 0)
-            return 1;
+int carteExiste(cartes tab[], int taille, cartes c){
+    for(int i = 0; i < taille; i++){
+        if(tab[i].type == c.type){
+            if(c.type == NUMERO && tab[i].numero == c.numero)
+                return 1;
+            if(c.type == BONUS && strcmp(tab[i].bonus, c.bonus) == 0)
+                return 1;
         }
     }
-    return 0; // pas trouvée
+    return 0;
 }
 
 cartes piocherCarte(cartes tab[], int *indextab) {

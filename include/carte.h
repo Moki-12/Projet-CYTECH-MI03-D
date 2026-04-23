@@ -8,12 +8,12 @@ typedef struct {
     int type;
     int valeur;
     char bonus[5];
-} Carte;
+} cartes;
 
-void affichageTab(Carte tab[]);
-void melanger(Carte tab[], int taille);
-int effetCarte(Carte c, int score);
-int carteExiste(Carte tab[], int taille, Carte c);
+void affichageTab(cartes tab[]);
+void melanger(cartes tab[], int taille);
+int effetCarte(cartes c, int score);
+int carteExiste(cartes tab[], int taille, cartes c);
 cartes piocherCarte(cartes tab[], int *indextab)
 
 #endif
