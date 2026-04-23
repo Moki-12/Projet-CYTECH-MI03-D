@@ -1,8 +1,8 @@
-printf("Statistiques de la pioche :\n--------------------------------\n"); //à partir de la ligne
+printf("Statistiques de la pioche :\n--------------------------------\n"); //de la ligne 186 à 193
 int total;
 if (i < 2) {
     total = 1;
-    }else {
+    }else{
         total = i;  
 }
 
@@ -15,9 +15,7 @@ printf("\n");
 for (int i = 0; i <= 5; i++){
     printf("| %d  |:%d/%-2d ", i, compteur[i].numero, total);  // Le %-2 sert à forcer l'alignement
 }
-
 printf("\n");
-
 for (int i = 0; i <= 5; i++){
     printf("+----+      ");
 }
@@ -33,7 +31,6 @@ for (int i = 6; i <= 12; i++){
     printf("| %2d |:%d/%-2d ", i, compteur[i].numero, i);
 }
 printf("\n");
-
 for (int i = 6; i <= 12; i++){
     printf("+----+      ");
 }
