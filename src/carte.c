@@ -1,6 +1,8 @@
 #include "carte.h"     
 #include <string.h>    
 #include <stdlib.h>
+#include NUMERO 1
+#include BONUS 0
 
 
 void AfficheTab(cartes tab[]){
