@@ -186,11 +186,12 @@ void manche(cartes tab[], int nb_joueur, joueur joueurs[], int *taille, int *der
                     printf ("Statistiques de la pioche :\n--------------------------------\n");
                     printf ("\n");
                     int total;
-                    if (i < 2){
+                    int w = 0;
+                    if (w < 2){
                         total = 1;
                     }
                     else {
-                        total = i;
+                        total = w;
                     }
                     for (int x = 0; x <= 5; x++){
                         printf("+----+      ");
@@ -200,6 +201,12 @@ void manche(cartes tab[], int nb_joueur, joueur joueurs[], int *taille, int *der
                     //printf ("| 00  | : %d/1 ", compteur[0].numero);
 
                     for (int w=0; w<=5; w++){
+                        if (w == 0){
+                            total = 1;
+                        }
+                        else {
+                            total = w;
+                        }
                         printf ("| %d  |:%d/%-2d ", w, compteur[w].numero, total);
                     }
                     printf ("\n");
