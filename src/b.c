@@ -184,13 +184,97 @@ void manche(cartes tab[], int nb_joueur, joueur joueurs[], int *taille, int *der
                     }
                         
                     printf ("Statistiques de la pioche :\n--------------------------------\n");
-                    printf ("[0] : %d/1 ", compteur[0].numero);
+                    printf ("\n");
+                    int total;
+                    if (i < 2){
+                        total = 1;
+                    }
+                    else {
+                        total = i;
+                    }
+                    for (int x = 0; x <= 5; x++){
+                        printf("+----+      ");
+                    }
+                    
+                    printf ("\n");
+                    //printf ("| 00  | : %d/1 ", compteur[0].numero);
 
-                    for (int w=1; w<13; w++){
-                        printf ("[%d]: %d/%d  ", w, compteur[w].numero, w);
+                    for (int w=0; w<=5; w++){
+                        printf ("| %d  |:%d/%-2d ", w, compteur[w].numero, total);
+                    }
+                    printf ("\n");
+                    for (int p = 0; p <= 5; p++){
+                        printf("+----+      ");
+                    }
+                    printf ("\n");
+                    printf ("\n");
+                    for (int h = 6; h <= 12; h++){
+                        printf("+----+      ");
+                    }
+                    
+                    printf ("\n");
+                    
+                    for (int s=6; s<=12; s++){
+                        printf ("| %2d |:%d/%-2d ", s, compteur[s].numero, s);
+                    }
+                    printf ("\n");
+                    for (int f=6; f<=12; f++){
+                        printf("+----+      ");
                     }
                     printf ("\n");
                 }
+                int stats_danger[13] = {0};    //à partir de la ligne 194 c'est entre la fin des statistiques de la pioche et le début de que voulez vous faire 
+                for(int o = 0; o < n; o++){
+                    if(tab[o].bonus[0] == '\0' && tab[o].numero >= 0 && tab[o].numero <= 12){
+                        stats_danger[tab[o].numero]++;
+                        
+                    }
+                    
+                }
+                int dangerTotal = 0;
+                printf("\n-------- ANALYSE DU RISQUE ---------\n");
+                int debutMain = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;
+                for(int c = 0; c < joueurs[j].nbCartesManche; c++){
+                    int index = debutMain + c;
+                    if(joueurs[j].cartes[index].bonus[0] != '\0') continue;
+                    int num_carte = joueurs[j].cartes[index].numero;
+                    int totalmain;
+                    if(num_carte == 0 || num_carte == 1){
+                        totalmain = 1;
+                        
+                    }else{
+                        totalmain = num_carte;
+                        
+                    }
+                    int restantes = totalmain - stats_danger[num_carte];
+                    if (restantes < 0){
+                        restantes = 0;
+                        
+                    }
+                    dangerTotal += restantes;
+    printf("- Carte %d : %d encore dans la pioche\n", num_carte, restantes);
+}
+
+float risque = 0;
+if (*taille > 0) {
+    risque = (dangerTotal * 100.0) / (*taille);
+}
+
+
+printf("Total cartes dangereuses : %d | Cartes restantes : %d\n", dangerTotal, *taille);
+printf("Probabilite de doublon : %.1f%%\n", risque);
+
+
+if(risque < 20.0){
+printf("🟢 Risque faible - Conseil 🤓 : Vous pouvez piocher en toute tranquilité !\n");
+}
+else if (risque < 37.0){
+    printf("🟡 Risque moyen - Conseil 🤓 : Attention, reflechissez bien.\n");
+}
+else {
+printf("🔴 Risque eleve - Conseil 🤓 : C'est dangereux, il serait préférable d'arrêter !\n");
+}
+printf("----------------------------------\n\n");
                 //if (){
                 //printf ("Conseil : Attention , %d cartes %d sont déjà sorties.\nVous en avez %d, il en reste %d dans la pioches",compteur[ ].numero,/*(la variable*/, compteur_cartes_joueurs[joueurs[j].cartes[/*variable*/]].numero,compteur[/*variable*/].numero);
                 //}
