@@ -1,4 +1,4 @@
-int stats_danger[13] = {0};
+int stats_danger[13] = {0};    //à partir de la ligne 194 c'est entre la fin des statistiques de la pioche et le début de que voulez vous faire 
 for(int s = 0; s < n; s++){
     if(tab[s].bonus[0] == '\0' && tab[s].numero >= 0 && tab[s].numero <= 12){
         stats_danger[tab[s].numero]++;
