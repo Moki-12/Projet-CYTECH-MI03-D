@@ -13,9 +13,9 @@
 #define BG_WHITE   "\033[47m"  // Fond blanc pour les numéros
 #define BG_GOLD    "\033[43m"  // Fond jaune pour les bonus
 #define TEXT_BLACK "\033[30m"  // Texte noir sur les fonds clairs
-#define BLEU_GRAS     "\x1b[1;34m"  // 
-#define CYAN_GRAS     "\x1b[1;36m"  // 
-#define MAGENTA_GRAS  "\x1b[1;35m"  // 
+#define BLEU_GRAS     "\x1b[1;34m"  // Calme, professionnel
+#define CYAN_GRAS     "\x1b[1;36m"  // Très lisible, idéal pour les scores
+#define MAGENTA_GRAS  "\x1b[1;35m"  // Pour les noms de joueurs ou les annonces
 
 typedef struct{
     int numero;
@@ -242,12 +242,13 @@ if (n_main > 0) {
                         compteur_cartes_joueurs[joueurs[j].cartes[y]].numero++;
                     }*/
                     for (int b = 0; b <n; b++) {
-                        if (tab[b].numero >= 0) { // <--- IMPORTANTTTTT !!!!!!!
+                        if (tab[b].numero >= 0 && tab[b].numero <= 12) { // <--- IMPORTANTTTTT !!!!!!!
                            compteur[tab[b].numero].numero++;
                         }
                     }
-                    printf ("\n");    
-                  
+                    printf ("\n");  
+    
+                       
 
 printf(MAGENTA_GRAS "  Statistiques — cartes déjà sorties\n" RESET);
 
@@ -319,7 +320,7 @@ for(int s = 0; s < n; s++){
 
 int dangerTotal = 0;
 printf ("  ────────────────────────────────\n");
-printf(MAGENTA_GRAS  "  ANALYSE DU RISQUE \n" RESET);
+printf(MAGENTA_GRAS  "  ANALYSE DU RISQUE \n\n" RESET);
 
 int debutMain = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;
 
@@ -361,7 +362,7 @@ if (risque < 20.0f) {
     printf(ROUGE_GRAS "%.1f%%\n" RESET, risque);
 }
 
-printf("  Conseil : ");
+printf("\n  Conseil : ");
 if (risque < 20.0f) {
     printf(VERT_GRAS "Risque faible — Piochez en toute tranquillite !\n" RESET);
 } else if (risque < 37.0f) {
@@ -553,15 +554,13 @@ int main(){
     }
 
     do {
-    
     printf("\n  " OR "  M A N C H E  N°%d " RESET "\n\n", nb_manche);
 
     manche(tab, nb_joueur, joueur, &TAILLE, &dernierePioche);
     
     nb_manche++;
 
-    printf("\n  " MAGENTA_GRAS "SCORES" RESET "\n");
-
+    
     int maxScore = -1;
     int indexLeader = 0;
 
@@ -573,33 +572,77 @@ int main(){
             indexLeader = j;
         }
 
-        printf("\n  " BLANC_GRAS "★ %s" RESET, joueur[j].pseudo);
-        
-        printf("\n  Score manche : %d", joueur[j].score_pot);
-        
-        if (joueur[j].score_pot == 0) printf(ROUGE_GRAS " (Doublon)" RESET);
-        else if (joueur[j].nbCartesManche >= 7) printf(VERT_GRAS " (Flip 7 )" RESET); // Exemple de score fixe ou +15
-
-        printf("\n  " OR "SCORE TOTAL : %d" RESET "\n", joueur[j].score_total);
-
         if (joueur[j].score_total >= 200) {
-            fin = 0;
+            fin = 0; 
         }
     }
 
+    
+    if (fin != 0 && TAILLE > 0) {
+        printf("\n  " MAGENTA_GRAS "SCORES" RESET "\n");
+
+        for (int j = 0; j < nb_joueur; j++) {
+            printf("\n  " BLANC_GRAS "★ %s" RESET, joueur[j].pseudo);
+            
+            printf("\n  Score manche : %d", joueur[j].score_pot);
+            
+            if (joueur[j].score_pot == 0) printf(ROUGE_GRAS " (Doublon)" RESET);
+            else if (joueur[j].nbCartesManche >= 7) printf(VERT_GRAS " (Flip 7 )" RESET);
+
+            printf("\n  " OR "SCORE TOTAL : %d" RESET "\n", joueur[j].score_total);
+        }
+
+        printf("\n  " OR "────────────────────────────────────────────" RESET "\n");
+        printf("  Nombre de cartes restantes dans la pioche : %d\n", TAILLE);
+        printf("  " JAUNE_GRAS "%s est en tête avec %d points !" RESET "\n", 
+                joueur[indexLeader].pseudo, joueur[indexLeader].score_total);
+        printf("  " OR "────────────────────────────────────────────" RESET "\n\n");
+    }
+    
+
+} while (fin != 0 && TAILLE > 0);
+
+
+printf("\n\n");
+ printf(ROUGE_GRAS "  F I N   D E   P A R T I E" RESET "\n\n");
+    if (TAILLE <= 0) {
+        printf( JAUNE_GRAS "  LA PIOCHE EST VIDE...\n  Le moment de découvrir les résultats est arrivé !\n " RESET );
+        
+    } else {
+        
+        printf(JAUNE_GRAS "  UN JOUEUR A ATTEINT LES 200 POINTS...\n  Le moment de découvrir les résultats est arrivé !\n " RESET );
+    }
+
+    printf("\n  Appuyez sur [Entree] pour afficher le classement final...");
+    while (getchar() != '\n'); 
+    getchar(); 
+
+   
+
+    int maxFinal = -1;
+    int indexGagnant = 0;
+    for (int j = 0; j < nb_joueur; j++) {
+        if (joueur[j].score_total > maxFinal) {
+            maxFinal = joueur[j].score_total;
+            indexGagnant = j;
+        }
+    }
+
+    printf("\n  " JAUNE_GRAS "  🏆 LE GRAND VAINQUEUR EST : %s !" RESET, joueur[indexGagnant].pseudo);
+    printf("\n  " BLANC_GRAS "  Avec un score total de %d points." RESET "\n", maxFinal);
     printf("\n  " OR "────────────────────────────────────────────" RESET "\n");
-    
-    printf("  Nombre de cartes restantes dans la pioche : %d\n", TAILLE);
 
-    printf("  "JAUNE_GRAS "%s est en tête avec %d points !" RESET "\n", 
-           joueur[indexLeader].pseudo, joueur[indexLeader].score_total);
-    
-    printf("  " OR "──────────────────────────────────────────" RESET "\n\n");
+    for (int j = 0; j < nb_joueur; j++) {
+        if (j == indexGagnant) {
+            printf("  - " JAUNE_GRAS "%-10s : %d pts (VAINQUEUR)" RESET "\n", joueur[j].pseudo, joueur[j].score_total);
+        } else {
+            printf("  - %-10s : %d pts\n", joueur[j].pseudo, joueur[j].score_total);
+        }
+    }
+    printf("  " OR "────────────────────────────────────────────" RESET "\n\n");
 
-    
 
-} while (fin != 0);
-    while ( fin !=0  && TAILLE > 0);
+
     char enregistrer;
     do {
         printf ("Voulez-vous enregistrer les scores de la partie ? o(oui) ou n(non)\n");
@@ -615,4 +658,4 @@ int main(){
 }
     
     return 0;
-}
+    }
