@@ -273,7 +273,7 @@ for (int w = 0; w <= 6; w++) {
                             total_w = w;
                         }
 
-    printf(OR "│" RESET " %d/%-2d" OR "│" RESET "  ", compteur[w].numero, total_w);
+    printf(OR "│" RESET JAUNE_GRAS " %d/%-2d" RESET OR "│" RESET "  ", compteur[w].numero, total_w);
 }
 printf("\n");
 for (int w = 0; w <= 6; w++){
@@ -299,7 +299,7 @@ for (int w = 7; w <= 12; w++){
 printf("\n");
 
 for (int w = 7; w <= 12; w++) {
-    printf(OR "│" RESET " %d/%-2d" OR "│" RESET "  ", compteur[w].numero, w);
+    printf(OR "│" RESET JAUNE_GRAS" %d/%-2d" RESET OR "│" RESET "  ", compteur[w].numero, w);
 }
 printf("\n");
 
