@@ -175,7 +175,7 @@ void manche(cartes tab[], int nb_joueur, joueur joueurs[], int *taille, int *der
 
 printf(OR "  ┌──────────────────────────────────────────────────────────────────────────────┐" RESET "\n");
 
-printf(OR "  │ " BLEU_GRAS  " AU TOUR DE %-20s" RESET, joueurs[j].pseudo);
+printf(OR "  │ " ROUGE_GRAS  " AU TOUR DE %-20s" RESET, joueurs[j].pseudo);
 
 printf(OR "                                    Tour %d/7 │" RESET "\n", nb_manche , i + 1);
 
@@ -533,11 +533,11 @@ int main(){
     
     
      printf("\n");
-    printf(MAGENTA_GRAS "  ╔════════════════════════════════════════╗\n" RESET);
-    printf(MAGENTA_GRAS "  ║                                        ║\n" RESET);
-    printf(MAGENTA_GRAS "  ║" MAGENTA_GRAS "               FLIPTECH                 " MAGENTA_GRAS "║\n" RESET);
-    printf(MAGENTA_GRAS "  ║                                        ║\n" RESET);
-    printf(MAGENTA_GRAS "  ╚════════════════════════════════════════╝\n\n" RESET);
+    printf(ROUGE_GRAS "  ╔════════════════════════════════════════╗\n" RESET);
+    printf(ROUGE_GRAS "  ║                                        ║\n" RESET);
+    printf(ROUGE_GRAS "  ║" JAUNE_GRAS "               FLIPTECH                 " ROUGE_GRAS "║\n" RESET);
+    printf(ROUGE_GRAS "  ║                                        ║\n" RESET);
+    printf(ROUGE_GRAS "  ╚════════════════════════════════════════╝\n\n" RESET);
 
     printf( "  Combien de joueurs ? " );
     scanf ("%d", &nb_joueur);
