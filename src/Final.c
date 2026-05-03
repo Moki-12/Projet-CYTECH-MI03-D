@@ -18,7 +18,6 @@ typedef struct{
     int numero;
     char bonus[5];
 } cartes;
-
 typedef struct{
     char pseudo[100];
     int scores;
