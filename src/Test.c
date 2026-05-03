@@ -509,7 +509,7 @@ void manche(cartes tab[], int nb_joueur, joueur joueurs[], int *taille, int *der
                     printf("  %s que voulez vous faire ?\n  [1] : Piocher || [2] : S'arrêter\n\n",
                             joueurs[j].pseudo);
                 }
-                printf("  ────────────────────────────────────────\n");
+                printf("  ────────────────────────────────────────");
 
                 scanf("%d", &sortir);
 
