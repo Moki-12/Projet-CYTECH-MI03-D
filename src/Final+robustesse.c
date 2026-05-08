@@ -27,6 +27,7 @@ typedef struct{
     int nbCartesManche;
     int score_pot;
     int debutManche;
+    int flip7;
 } joueur;
 
 void pause() {
@@ -110,6 +111,33 @@ int carteExisteManche(cartes *main, int debut, int taille, cartes carte){
     return 0;
 }
 
+int calculerScoreFinal (joueur *j, int elimine){
+    int score = 0;
+    int debut = j->debutManche;
+    int fin = j->debutManche + j->nbCartesManche;
+    if(fin > j->nb_cartes){
+        fin = j->nb_cartes;
+    }
+
+    if(debut >= fin){
+        return 0;
+    }
+    if (elimine == 0){
+    for (int i=debut; i<fin; i++){
+        if (j->cartes[i].bonus[0] == '\0'){
+            score = effetNumero(j->cartes[i].numero, score);// ou score =+j->cartes[i].numero mais necessite de changer ou supprimer la fonction effetNumero
+        }
+    }
+    }
+    for (int i=debut; i<fin; i++){
+        if (j->cartes[i].bonus[0] != '\0'){
+            score = effetBonus(j->cartes[i].bonus, score);
+        }
+    }
+    return score;
+}
+
+
 void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernierePioche){
     if (tab == NULL || joueurs == NULL || nb_joueur < 0){
         exit (5);
@@ -117,29 +145,37 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
     int nb_tour = 0;
     int n = *dernierePioche;
     int sortir;
-    int penalise[50];
+    int *arret = malloc (nb_joueur * sizeof(int));
+    int *elimine = malloc (nb_joueur * sizeof(int));
+    if (arret == NULL || elimine == NULL){
+        printf ("Erreur allocation dynamique");
+        exit(1);
+    }
     int verif;
-
+    int joueur_actif;
+    int flip7 = 0;
     for(int l = 0; l < nb_joueur; l++){
         joueurs[l].scores        = 0;
-        penalise[l]              = 0;
+        arret[l] = 0;
+        joueurs[l].flip7 = 0;
+        elimine[l] = 0;
         joueurs[l].nbCartesManche = 0;
         joueurs[l].score_pot     = 0;
         joueurs[l].debutManche   = joueurs[l].nb_cartes; /* sauvegarde début manche */
     }
 
-    for(int i = 0; i < 15; i++){
+    do {
         nb_tour++;
         for(int j = 0; j < nb_joueur; j++){
 
             if(*taille == 0) return;
-            if(penalise[j] == 1) continue;
+            if(arret[j] == 1 || elimine[j] == 1) continue;
 
             do {
                 printf("\n");
                 printf(OR "  ┌──────────────────────────────────────────────────────────────────────────────┐" RESET "\n");
                 printf(OR "  │ " ROUGE_GRAS " AU TOUR DE %-20s" RESET, joueurs[j].pseudo);
-                printf(OR "                                    Tour %d │" RESET "\n", i + 1);
+                printf(OR "                                    Tour %d │" RESET "\n", nb_tour);
                 printf(OR "  └──────────────────────────────────────────────────────────────────────────────┘" RESET "\n");
                 printf("\n");
 
@@ -263,10 +299,10 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                 vide_buffer();
                 } while (verif != 1);
 
-            } while(sortir != 1 && sortir != 2) || (verif != 1);
+            } while (sortir != 1 && sortir != 2 || verif != 1);
 
             if(sortir == 2){
-                penalise[j] = 1;
+                arret[j] = 1;
             } else {
                 int scoreAvant = joueurs[j].score_pot;
 
@@ -297,15 +333,12 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                     printf("\n  " ROUGE_GRAS "Votre score pour cette manche est donc de 0." RESET "\n\n");
                     joueurs[j].scores    = 0;
                     joueurs[j].score_pot = 0;
-                    penalise[j]          = 1;
+                    elimine[j]          = 1;
                     joueurs[j].nb_cartes++;
                 } else {
                     /* Appliquer l'effet de la carte */
                     if(c.bonus[0] == '\0')
                         joueurs[j].scores = effetNumero(c.numero, joueurs[j].scores);
-                    else
-                        joueurs[j].scores = effetBonus(c.bonus, joueurs[j].scores);
-
                     joueurs[j].nb_cartes++;
                     joueurs[j].nbCartesManche++;
                     joueurs[j].score_pot = joueurs[j].scores;
@@ -318,10 +351,9 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                     if(nbNumeros >= 7 && c.bonus[0] == '\0'){
                         printf("  " JAUNE_GRAS "★ FLIP 7 !" RESET "\n");
                         printf("  Vous venez de collecter 7 numeros differents ! Bonus accorde !\n");
-                        printf("\n  %d + " JAUNE_GRAS "15" RESET " = " BLANC_GRAS "%d" RESET "\n\n",
-                               joueurs[j].score_pot, joueurs[j].score_pot + 15);
                         joueurs[j].score_pot += 15;
-                        i = 15;
+                        flip7 = 1;
+                        joueurs[j].flip7 = 1;
                         n++;
                         break;
                     } else {
@@ -329,12 +361,9 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                         if(c.bonus[0] == '\0')
                             printf("  Score : %d + %d = " BLANC_GRAS "%d pts" RESET "\n\n",
                                    scoreAvant, c.numero, joueurs[j].score_pot);
-                        else if(strcmp(c.bonus, "x2") == 0)
-                            printf("  Score : %d * 2 = " BLANC_GRAS "%d pts" RESET "\n\n",
-                                   scoreAvant, joueurs[j].score_pot);
                         else
-                            printf("  Score : %d %s = " BLANC_GRAS "%d pts" RESET "\n\n",
-                                   scoreAvant, c.bonus, joueurs[j].score_pot);
+                            printf("  Score : %d = " BLANC_GRAS "%d pts" RESET "\n\n",
+                                   scoreAvant, joueurs[j].score_pot);
                     }
                 }
 
@@ -343,11 +372,26 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                 n++;
             }
         }
+        joueur_actif = 0;
+        for (int v=0; v<nb_joueur; v++){
+            if (arret[v] == 0 && elimine[v] == 0){
+                joueur_actif++;
+            }
+        }
+    } while (flip7 == 0 && joueur_actif > 0);
+    for (int d=0; d<nb_joueur; d++){
+        joueurs[d].score_pot = calculerScoreFinal (&joueurs[d], elimine[d]);
+        if (joueurs[d].flip7 == 1){
+            joueurs[d].score_pot += 15;
+        }
     }
     *dernierePioche = n;
+free(elimine);
+free(arret);
 }
 
-void CahierDesCharges(int nb_joueur, joueur joueurs[], char nom[]){
+void CahierDesCharges(int nb_joueur, joueur *joueurs, char *nom){
+    if (nb_joueur <= 0 || joueurs == NULL || nom == NULL) exit(1);
     char nomComplet[110];
     sprintf(nomComplet, "%s.txt", nom);
     FILE *f = fopen(nomComplet, "w");
@@ -494,6 +538,6 @@ int main(){
         scanf("%s", nom_fichier);
         CahierDesCharges(nb_joueur, joueur, nom_fichier);
     }
-
+    free(joueur);
     return 0;
 }
