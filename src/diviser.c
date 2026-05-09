@@ -207,31 +207,31 @@ void afficherMain(joueur *j) {
     afficher_ligne_carte(&j->cartes[debutAff], n_main);
 } 
 
-void afficherStats(cartes *tab, int n) {
+void afficherStats(cartes *tab, int n){
     int compteur[13];
-    for (int i = 0; i < 13; i++) {
+    for (int i = 0; i < 13; i++){
         compteur[i] = 0;
     }
     for (int i = 0; i < n; i++) {
-        if (tab[i].numero >= 0 && tab[i].numero <= 12) {
+        if (tab[i].numero >= 0 && tab[i].numero <= 12){
             compteur[tab[i].numero] = compteur[tab[i].numero] + 1;
         }
     }
     printf("\n");
     printf(MAGENTA_GRAS " Statistiques de la pioche — cartes déjà sorties\n" RESET);
 
-    for (int ligne = 0; ligne < 5; ligne++) { //première rangée de carte
-        for (int i = 0; i <= 6; i++) {
+    for (int ligne = 0; ligne < 5; ligne++){ //première rangée de carte
+        for (int i = 0; i <= 6; i++){
             cartes temp;               // pour stocker la fréquence
             temp.numero = i;
             temp.bonus[0] = '\0';
             afficher_une_carte(temp, ligne);
             
-            if (ligne == 2) {         // affichage stat
+            if (ligne == 2){         // affichage stat
                 int total_carte;
-                if (i == 0) {
+                if (i == 0){
                     total_carte = 1;
-                } else {
+                }else {
                     total_carte = i;
                 }
                 
@@ -248,8 +248,8 @@ void afficherStats(cartes *tab, int n) {
     printf("\n"); 
 
     //seconde rangée même chose
-    for (int ligne = 0; ligne < 5; ligne++) {
-        for (int i = 7; i <= 12; i++) {
+    for (int ligne = 0; ligne < 5; ligne++){
+        for (int i = 7; i <= 12; i++){
             cartes temp;
             temp.numero = i;
             temp.bonus[0] = '\0';
@@ -258,7 +258,7 @@ void afficherStats(cartes *tab, int n) {
 
             if (ligne == 2) {
                 printf(JAUNE_GRAS ":%2d" RESET "/%-2d" RESET, compteur[i], i);
-            } else {
+            }else {
                 printf("      ");
             }
             printf(" ");
@@ -272,7 +272,7 @@ void afficher_cartepiochée(cartes c) {
     afficher_ligne_carte(&c, 1);
 }
 
-void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
+void afficherRisque(joueur *j, cartes *tab, int n, int taille){
     int stats_danger[13] = {0};       // pour stocker risque
     for (int s = 0; s < n; s++)
         if (tab[s].bonus[0] == '\0' && tab[s].numero >= 0 && tab[s].numero <= 12)
@@ -282,8 +282,8 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
     printf(" ────────────────────────────────\n");
     printf(MAGENTA_GRAS " ANALYSE DU RISQUE \n\n" RESET);
 
-    for (int m = j->debutManche; m < j->nb_cartes; m++) {
-    if (j->cartes[m].bonus[0] != '\0') {   // Si la carte est un bonus on l'ignore
+    for (int m = j->debutManche; m < j->nb_cartes; m++){
+    if (j->cartes[m].bonus[0] != '\0'){   // Si la carte est un bonus on l'ignore
         continue; 
     }
 
@@ -292,7 +292,7 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
     int restantes = totalmain - stats_danger[num_carte];
 
     /* Sécurité pour ne pas avoir un nombre négatif */
-    if (restantes < 0) {
+    if (restantes < 0){
         restantes = 0;
     }
 
@@ -303,7 +303,7 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
 
    // Calcul risque
     float risque;
-    if (taille > 0) {
+    if (taille > 0){
         /* On multiplie par 100.0f pour transformer le ratio en pourcentage (ex: 0.25 -> 25.0) */
         risque = (dangerTotal * 100.0f) / taille;
     } else {
