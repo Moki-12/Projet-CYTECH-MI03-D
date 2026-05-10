@@ -214,21 +214,20 @@ void afficherStats(cartes *tab, int n){
     }
     for (int i = 0; i < n; i++) {
         if (tab[i].numero >= 0 && tab[i].numero <= 12){
-            compteur[tab[i].numero] = compteur[tab[i].numero] + 1;
+            compteur[tab[i].numero] ++;
         }
     }
     printf("\n");
     printf(MAGENTA_GRAS " Statistiques de la pioche — cartes déjà sorties\n" RESET);
 
-    for (int ligne = 0; ligne < 5; ligne++){ //première rangée de carte
+    for(int ligne = 0; ligne < 5; ligne++){ //première rangée de carte
         for (int i = 0; i <= 6; i++){
             cartes temp;               // pour stocker la fréquence
             temp.numero = i;
             temp.bonus[0] = '\0';
             afficher_une_carte(temp, ligne);
-            
+            int total_carte;
             if (ligne == 2){         // affichage stat
-                int total_carte;
                 if (i == 0){
                     total_carte = 1;
                 }else {
@@ -273,7 +272,10 @@ void afficher_cartepiochée(cartes c) {
 }
 
 void afficherRisque(joueur *j, cartes *tab, int n, int taille){
-    int stats_danger[13] = {0};       // pour stocker risque
+    int stats_danger[13];             // pour stocker risque
+    for (int i = 0; i < 13; i++){
+        stats_danger[i] = 0;
+    }
     for (int s = 0; s < n; s++)
         if (tab[s].bonus[0] == '\0' && tab[s].numero >= 0 && tab[s].numero <= 12)
             stats_danger[tab[s].numero]++;
@@ -297,8 +299,7 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille){
     }
 
     dangerTotal += restantes;
-        printf(" - Carte" JAUNE_GRAS " %d" RESET " : " ROUGE_GRAS "%d " RESET "encore dans la pioche\n",
-               num_carte, restantes);
+        printf(" - Carte" JAUNE_GRAS" %d" RESET " : " ROUGE_GRAS "%d "RESET"encore dans la pioche\n", num_carte, restantes);
     }
 
    // Calcul risque
@@ -332,11 +333,13 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille){
     }else {
         printf(ROUGE_GRAS "Risque eleve — Il serait préférable de vous arrêter !\n" RESET);
     }
-    printf(" ──────────────────────────────────────\n\n");
+    printf(" ──────────────────────────────────────\n");
+    printf("\n");
 }
 
 void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int TAILLE) {
-    printf("\n  " MAGENTA_GRAS "SCORES" RESET "\n");
+    printf("\n  " MAGENTA_GRAS "SCORES" RESET);
+    printf("\n");
     for (int j = 0; j < nb_joueur; j++) {
         printf("\n  " BLANC_GRAS "★ %s" RESET, joueurs[j].pseudo);
         printf("\n  Score manche : %d", joueurs[j].score_pot);
@@ -350,15 +353,14 @@ void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int T
                 printf(VERT_GRAS " (Flip 7) !" RESET);
             }
         }
-
         printf("\n  " OR "SCORE TOTAL : %d" RESET "\n", joueurs[j].score_total);
     }
 
     printf("\n  " OR "────────────────────────────────────────────" RESET "\n");
     printf(" Cartes restantes dans la pioche : %d\n", TAILLE);
-    printf("  " JAUNE_GRAS "%s est en tête avec %d points !" RESET "\n",
+    printf(JAUNE_GRAS " %s est en tête avec %d points !" RESET "\n",
            joueurs[indexLeader].pseudo, joueurs[indexLeader].score_total);
-    printf("  " OR "────────────────────────────────────────────" RESET "\n\n");
+    printf(OR " ────────────────────────────────────────────" RESET "\n\n");
 }
 
 void afficherFinPartie(joueur *joueurs, int nb_joueur, int TAILLE) {
