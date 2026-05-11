@@ -9,7 +9,7 @@ typedef struct {
     int valeur;
     char bonus[5];
 } cartes;
-
+       
 void affichageTab(cartes tab[]);
 void melanger(cartes tab[], int taille);
 int effets(cartes c, int score);
