@@ -3,8 +3,8 @@
 #include<time.h>
 //#define TAILLE 85
 #include<string.h>
-#define ROUGE_GRAS  "\x1b[1;31m"
-#define VERT_GRAS   "\x1b[1;32m"
+#define ROUGE_GRAS   "\x1b[1;31m"
+#define VERT_GRAS    "\x1b[1;32m"
 #define JAUNE_GRAS  "\x1b[1;93m"
 #define OR      "\x1b[33m"
 #define BLANC   "\x1b[97m"
