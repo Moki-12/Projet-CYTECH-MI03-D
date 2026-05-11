@@ -5,7 +5,7 @@
 #include "joueur.h"
 #include "carte.h"
 
-
+      
 void manche();
 
 #endif
