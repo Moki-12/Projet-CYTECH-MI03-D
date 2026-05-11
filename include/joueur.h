@@ -11,6 +11,6 @@ typedef struct {
     int score_total;
 } Joueur;
 
-
+ 
 
 #endif
