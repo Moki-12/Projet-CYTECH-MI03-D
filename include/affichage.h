@@ -10,5 +10,5 @@ void affichageMain(Joueur j);
 void affichageScores(Joueur joueurs[], int nb_joueur);
 void affichageTour(int numeroTour);
 void affichageCarte(cartes c);
-
+  
 #endif
