@@ -3,7 +3,7 @@
 
 #define NUMERO 1
 #define BONUS 0
-
+  
 typedef struct {
     int type;
     int valeur;
