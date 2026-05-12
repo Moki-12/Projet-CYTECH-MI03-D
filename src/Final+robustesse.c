@@ -80,7 +80,7 @@ int effetNumero(int numero, int score){
 int effetBonus(char *bonus, int score){
     if (bonus == NULL || score < 0){
         exit(2);
-    }
+    } 
     if(strcmp(bonus, "x2")  == 0) return score * 2;
     if(strcmp(bonus, "+2")  == 0) return score + 2;
     if(strcmp(bonus, "+4")  == 0) return score + 4;
