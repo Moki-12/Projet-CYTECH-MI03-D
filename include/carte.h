@@ -1,19 +1,18 @@
 #ifndef CARTES_H
 #define CARTES_H
 
-#define NUMERO 1
-#define BONUS 0
   
 typedef struct {
-    int type;
-    int valeur;
+    int numero;
     char bonus[5];
 } cartes;
        
-void affichageTab(cartes tab[]);
-void melanger(cartes tab[], int taille);
-int effets(cartes c, int score);
-int carteExiste(cartes tab[], int taille, cartes c);
-cartes piocherCarte(cartes tab[], int *indextab)
+void corrigeTab(cartes *tab);
+void melanger(cartes *tab, int taille);
+int effetNumero(cartes *tab, int taille);
+int effetBonus(char *bonus, int score);
+int carteExisteManche(cartes *main, int debut, int taille, cartes carte);
+int compterNumeros(joueur *j);
+int calculerScoreFinal( joueur *j, int elimine);
 
 #endif
