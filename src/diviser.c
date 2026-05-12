@@ -168,7 +168,7 @@ void afficher_une_carte(cartes c, int ligne){
     }
 }
     
-
+ 
 void afficher_ligne_carte(cartes *tab_cartes, int taille) {
     for (int ligne = 0; ligne < 5; ligne++) {
         for (int m = 0; m < taille; m++)
