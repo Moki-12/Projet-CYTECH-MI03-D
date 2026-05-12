@@ -1,375 +1,255 @@
 #include <stdio.h>
 #include<stdlib.h>
 #include<time.h>
-//#define TAILLE 85
 #include<string.h>
-typedef struct{
-    int numero;
-    char bonus[5];
-} cartes;
-typedef struct{
-    char pseudo[1000];
-    int scores;
-    cartes cartes[50];
-    int nb_cartes;
-    int score_total;
-    int nbCartesManche;
-    int score_pot;
-} joueur;
 
-void corrigeTab(cartes tab[]){
-    int i = 0;
-    tab[i].numero = 0;
-    tab[i].bonus[0] = '\0';
-    i++;
-    tab[i].numero = 1;
-    tab[i].bonus[0] = '\0';
-    i++;
-    for(int n = 2; n <= 12; n++){
-        for(int j = 0; j < n; j++){
-            tab[i].numero = n;
-            tab[i].bonus[0] = '\0';
-            i++;
+
+void afficher_une_carte(cartes c, int ligne){
+    if (ligne == 0){
+        printf(" "OR "┌─────┐" RESET);
+    } 
+    else if (ligne == 1 || ligne == 3) {
+        if (c.bonus[0] != '\0') {
+            printf(" "OR "│" BG_GOLD "     " RESET OR "│" RESET);
+        }else {
+            printf(" "OR "│" BG_WHITE "     " RESET OR "│" RESET);
         }
     }
-    tab[i].numero = -1;  strcpy(tab[i++].bonus, "x2");
-    tab[i].numero = -2;  strcpy(tab[i++].bonus, "+2");
-    tab[i].numero = -3;  strcpy(tab[i++].bonus, "+4");
-    tab[i].numero = -4;  strcpy(tab[i++].bonus, "+6");
-    tab[i].numero = -5;  strcpy(tab[i++].bonus, "+8");
-    tab[i].numero = -6;  strcpy(tab[i++].bonus, "+10");
-}
-
-void affichage(cartes tab[], int taille){
-int i;
-for (i=0; i<taille; i++){
-    if (tab[i].bonus[0]=='\0'){
-        printf ("%d ", tab[i].numero);
-    }
-    else {
-        printf ("%s ", tab[i].bonus);
-    }
-}
-printf ("\n");
-}
-void melanger(cartes tab[], int taille){
-    for(int i = taille - 1; i > 0; i--){
-        int j = rand() % (i + 1);
-
-        cartes temp = tab[i];
-        tab[i] = tab[j];
-        tab[j] = temp;
-    }
-}
-
-int effetNumero(int numero, int score){
-    score += numero;
-    return score;
-}
-int effetBonus(char *bonus, int score){
-    if(strcmp(bonus, "x2") == 0){
-        score = score * 2;
-    }
-    else if(strcmp(bonus, "+2") == 0){
-        score += 2;
-    }
-    else if(strcmp(bonus, "+4") == 0){
-        score += 4;
-    }
-    else if(strcmp(bonus, "+6") == 0){
-        score += 6;
-    }
-    else if(strcmp(bonus, "+8") == 0){
-        score += 8;
-    }
-    else if(strcmp(bonus, "+10") == 0){
-        score += 10;
-    }
-
-    return score;
-}
-
-int carteExisteManche(cartes main[], int debut, int taille, cartes carte) {
-
-    for (int i = debut; i < debut + taille; i++) {
-        if (main[i].numero == carte.numero) {
-            return 1;
+    else if (ligne == 2) {
+        if (c.bonus[0] != '\0') {
+            printf(" "OR "│" BG_GOLD TEXT_BLACK " %-3s " RESET OR "│" RESET, c.bonus);
+        }else {
+            printf(" "OR "│" BG_WHITE TEXT_BLACK " %2d  " RESET OR "│" RESET, c.numero);
         }
     }
-
-    return 0;
+    else if (ligne == 4) {
+        printf(" "OR "└─────┘" RESET);
+    }
 }
-/*void stats (cartes pioche[], int piochées){
-    int stats [13];
     
-}*/
-void manche(cartes tab[], int nb_joueur, joueur joueurs[], int *taille, int *dernierePioche){
-    
-    int i, j, t;
-    int nb_tour = 0;
-    int n = *dernierePioche;
-    int sortir;
-    int penalise[50];
-    int cartesPiochées = 0;
 
-    for (int l=0; l<nb_joueur; l++){
-        joueurs[l].scores = 0;
-        penalise[l] = 0;
-        joueurs[l].nbCartesManche = 0;
-        joueurs[l].score_pot = 0;
+void afficher_ligne_carte(cartes *tab_cartes, int taille) {
+    for (int ligne = 0; ligne < 5; ligne++) {
+        for (int m = 0; m < taille; m++)
+            afficher_une_carte(tab_cartes[m], ligne);
+        printf("\n");
     }
+}
 
-    for(int i=0; i<7; i++){
-        printf ("Tour n°%d : \n", i+1);
-        nb_tour++;
-
-        for(int j=0; j<nb_joueur; j++){
-            if ((*taille)==1){
-                joueurs[j].scores += 15;
-
-                if(joueurs[j].cartes[joueurs[j].nb_cartes].bonus[0] == '\0'){
-                    joueurs[j].scores = effetNumero(
-                        joueurs[j].cartes[joueurs[j].nb_cartes].numero,
-                        joueurs[j].scores
-                    );
-                } else {
-                    joueurs[j].scores = effetBonus(
-                        joueurs[j].cartes[joueurs[j].nb_cartes].bonus,
-                        joueurs[j].scores
-                    );
-                }
-            }
-            else if ((*taille)==0){
-                return;
-            }
-
-            if (penalise[j]==1){
-                continue;
-            }
-
-            do {
-                printf ("------------Au tour de %s------------\n", joueurs[j].pseudo);
-                
-                if (joueurs[j].nbCartesManche >= 1) {
-
-    printf("Vos cartes en main :\n");
-
-    int debutManche = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;
-
-    for (int m = 0; m < joueurs[j].nbCartesManche; m++) {
-
-        int index = debutManche + m;
-
-        if (joueurs[j].cartes[index].bonus[0] == '\0') {
-            printf("[%d] ", joueurs[j].cartes[index].numero);
-        } else {
-            printf("[%s] ", joueurs[j].cartes[index].bonus);
-        }
-    }
-
+void afficher_accueil() {
     printf("\n");
-                    //cartesPiochées++;
+    printf(ROUGE_GRAS " ╔════════════════════════════════════════╗\n" RESET);
+    printf(ROUGE_GRAS " ║                                        ║\n" RESET);
+    printf(ROUGE_GRAS " ║" JAUNE_GRAS "               FLIPTECH                 " ROUGE_GRAS "║\n" RESET);
+    printf(ROUGE_GRAS " ║                                        ║\n" RESET);
+    printf(ROUGE_GRAS " ╚════════════════════════════════════════╝\n" RESET);
+    printf("\n");
+}
 
-                   // printf ("\n");
-                    printf ("Votre score potentiel : %d\n----------------------------\n",
-                            joueurs[j].score_pot);
+void afficher_tour(joueur *j, int tour) {
+    printf("\n");
+    printf(OR " ┌──────────────────────────────────────────────────────────────────────────────┐" RESET "\n");
+    printf(OR " │ " ROUGE_GRAS " AU TOUR DE %-20s" RESET, j->pseudo);
+    printf(OR "                                      Tour %d │" RESET "\n", tour);
+    printf(OR " └──────────────────────────────────────────────────────────────────────────────┘" RESET "\n");
+    printf("\n");
+}
 
-                    cartes compteur[13] = {0};
-                    /*cartes compteur_cartes_joueurs[50] = {0};
-                    for (int y=0; y<=nb_cartes; y++){
-                        compteur_cartes_joueurs[joueurs[j].cartes[y]].numero++;
-                    }*/
-                    for (int b = 0; b <n; b++) {
-                        compteur[tab[b].numero].numero++;
-                    }
-                        
-                    printf ("Statistiques de la pioche :\n--------------------------------\n");
-                    printf ("[0] : %d/1 ", compteur[0].numero);
+void afficherMain(joueur *j) {
+    printf(MAGENTA_GRAS " Vos cartes en main : (%d/7 numeros)\n" RESET,
+           compterNumeros(j));
 
-                    for (int w=1; w<13; w++){
-                        printf ("[%d]: %d/%d  ", w, compteur[w].numero, w);
-                    }
-                    printf ("\n");
+    int n_main = j->nbCartesManche;
+    int debutAff = j->nb_cartes-n_main;
+
+    /* On passe les cartes de la main à afficherRangeeCartes */
+    afficher_ligne_carte(&j->cartes[debutAff], n_main);
+} 
+
+void afficherStats(cartes *tab, int n){
+    int compteur[13];
+    for (int i = 0; i < 13; i++){
+        compteur[i] = 0;
+    }
+    for (int i = 0; i < n; i++) {
+        if (tab[i].numero >= 0 && tab[i].numero <= 12){
+            compteur[tab[i].numero] ++;
+        }
+    }
+    printf("\n");
+    printf(MAGENTA_GRAS " Statistiques de la pioche — cartes déjà sorties\n" RESET);
+
+    for(int ligne = 0; ligne < 5; ligne++){ 
+        for (int i = 0; i <= 6; i++){     //première rangée de carte
+            cartes temp;               // pour stocker la fréquence
+            temp.numero = i;
+            temp.bonus[0] = '\0';
+            afficher_une_carte(temp, ligne);
+            int total_carte;
+            if (ligne == 2){         // affichage stat
+                if (i == 0){
+                    total_carte = 1;
+                }else {
+                    total_carte = i;
                 }
-                //if (){
-                //printf ("Conseil : Attention , %d cartes %d sont déjà sorties.\nVous en avez %d, il en reste %d dans la pioches",compteur[ ].numero,/*(la variable*/, compteur_cartes_joueurs[joueurs[j].cartes[/*variable*/]].numero,compteur[/*variable*/].numero);
-                //}
-                if (nb_tour <= 1){
-                    printf ("%s que voulez vous faire ?\n[1] : Piocher\n",
-                            joueurs[j].pseudo);
-                } else {
-                    printf ("%s que voulez vous faire ?\n[1] : Piocher || [2] : S'arrêter\n",
-                            joueurs[j].pseudo);
-                }
-
-                scanf ("%d", &sortir);
-
-            } while (sortir != 1 && sortir != 2);
-
-            if (sortir == 2){
-                penalise[j] = 1;
+                
+                /* %2d force l'affichage sur 2 caractères (ex: " 1" ou "11") */
+                /* Cela garantit que le texte fait toujours la même largeur */
+                printf(JAUNE_GRAS ":%2d"RESET "/%-2d" , compteur[i], total_carte);
+            } else {
+                printf("      "); 
             }
-            else {
-                joueurs[j].cartes[joueurs[j].nb_cartes] = tab[n];
-                (*taille)--;
-                int debut = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;
-                if (carteExisteManche(joueurs[j].cartes, debut, joueurs[j].nbCartesManche, joueurs[j].cartes[joueurs[j].nb_cartes])){
-                    joueurs[j].scores = 0;
-                    joueurs[j].score_pot = 0;
-                    penalise[j] = 1;
-                    printf ("\nDommage vous avez un doublon (%d) !\nVotre score pour cette manche est 0 !\n\n", joueurs[j].cartes[joueurs[j].nb_cartes].numero);
-                    joueurs[j].nb_cartes++;
-                }
-                else if (penalise[j] == 0){
+            printf(" ");
+        }
+        printf("\n");
+    }
+    printf("\n"); 
 
-                    if(joueurs[j].cartes[joueurs[j].nb_cartes].bonus[0] == '\0'){
-                        joueurs[j].scores = effetNumero(
-                            joueurs[j].cartes[joueurs[j].nb_cartes].numero,
-                            joueurs[j].scores
-                        );
-                    } else {
-                        joueurs[j].scores = effetBonus(
-                            joueurs[j].cartes[joueurs[j].nb_cartes].bonus,
-                            joueurs[j].scores
-                        );
-                    }
+    //seconde rangée même chose
+    for (int ligne = 0; ligne < 5; ligne++){
+        for (int i = 7; i <= 12; i++){
+            cartes temp;
+            temp.numero = i;
+            temp.bonus[0] = '\0';
 
-                    joueurs[j].nb_cartes++;
-                    joueurs[j].nbCartesManche++;
-                    joueurs[j].score_pot = joueurs[j].scores;
+            afficher_une_carte(temp, ligne);
 
-                    if(joueurs[j].nbCartesManche >= 7){
-                        printf ("FELICITATION %s ! Vous venez de réaliser une Flip7 !\nVotre score pour cette manche est %d + 15\n", joueurs[j].pseudo, joueurs[j].scores);
-                        joueurs[j].score_pot += 15;
-                        i=7;
-                        n++;
-                        break;
-                        
-                    }
-                }
-
-                n++;
+            if (ligne == 2) {
+                printf(JAUNE_GRAS ":%2d" RESET "/%-2d" RESET, compteur[i], i);
+            }else {
+                printf("      ");
             }
+            printf(" ");
+        }
+        printf("\n");
+    }
+}
+
+void afficher_cartepiochée(cartes c) {
+    printf(" Vous venez de piocher la carte :\n");
+    afficher_ligne_carte(&c, 1);
+}
+
+void afficherRisque(joueur *j, cartes *tab, int n, int taille){
+    int stats_danger[13];             // pour stocker risque
+    for (int i = 0; i < 13; i++){
+        stats_danger[i] = 0;
+    }
+    for (int s = 0; s < n; s++)
+        if (tab[s].bonus[0] == '\0' && tab[s].numero >= 0 && tab[s].numero <= 12)
+            stats_danger[tab[s].numero]++;
+
+    int dangerTotal = 0;
+    printf(" ────────────────────────────────\n");
+    printf(MAGENTA_GRAS " ANALYSE DU RISQUE \n\n" RESET);
+
+    for (int m = j->debutManche; m < j->nb_cartes; m++){
+    if (j->cartes[m].bonus[0] != '\0'){   // Si la carte est un bonus on l'ignore
+        continue; 
+    }
+
+    int num_carte = j->cartes[m].numero;
+    int totalmain = num_carte; 
+    int restantes = totalmain - stats_danger[num_carte];
+
+    /* Sécurité pour ne pas avoir un nombre négatif */
+    if (restantes < 0){
+        restantes = 0;
+    }
+
+    dangerTotal += restantes;
+        printf(" - Carte" JAUNE_GRAS" %d" RESET " : " ROUGE_GRAS "%d "RESET"encore dans la pioche\n", num_carte, restantes);
+    }
+
+   // Calcul risque
+    float risque;
+    if (taille > 0){
+        /* On multiplie par 100.0f pour transformer le ratio en pourcentage (ex: 0.25 -> 25.0) */
+        risque = (dangerTotal * 100.0f) / taille;
+    } else {
+        risque = 0.0f;
+    }
+
+    printf(" Total cartes dangereuses : %d sur %d cartes restantes\n", dangerTotal, taille);
+    printf(" Probabilité de doublon : ");
+
+    // affichage proba avec couleurs
+    if(risque < 20.0f){
+        printf(VERT_GRAS "%.1f%%\n" RESET, risque);
+    }else if (risque < 37.0f){
+        printf(JAUNE_GRAS "%.1f%%\n" RESET, risque);
+    }else {
+        printf(ROUGE_GRAS "%.1f%%\n" RESET, risque);
+    }
+
+    printf("\n Conseil : ");
+
+    // affichage conseil selon niveau de risque
+    if(risque < 20.0f){
+        printf(VERT_GRAS "Risque faible — Piochez en toute tranquillité !\n" RESET);
+    }else if (risque < 37.0f){
+        printf(JAUNE_GRAS "Risque moyen — Réfléchissez bien avant de piocher !\n" RESET);
+    }else {
+        printf(ROUGE_GRAS "Risque eleve — Il serait préférable de vous arrêter !\n" RESET);
+    }
+    printf(" ──────────────────────────────────────\n");
+    printf("\n");
+}
+
+void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int TAILLE) {
+    printf("\n  " MAGENTA_GRAS "SCORES" RESET);
+    printf("\n");
+    for (int j = 0; j < nb_joueur; j++) {
+        printf("\n  " BLANC_GRAS "★ %s" RESET, joueurs[j].pseudo);
+        printf("\n  Score manche : %d", joueurs[j].score_pot);
+
+        // On calcule le nombre de numéros différents pour la condition Flip 7
+        int numDiff = compterNumeros(&joueurs[j]);
+        if(joueurs[j].score_pot == 0){
+            printf(ROUGE_GRAS " (Doublon)" RESET);
+        }else if (numDiff >= 7) {
+            if(joueurs[j].nb_cartes > 7){
+                printf(VERT_GRAS " (Flip 7) !" RESET);
+            }
+        }
+        printf("\n  " OR "SCORE TOTAL : %d" RESET "\n", joueurs[j].score_total);
+    }
+
+    printf("\n  " OR "────────────────────────────────────────────" RESET "\n");
+    printf(" Cartes restantes dans la pioche : %d\n", TAILLE);
+    printf(JAUNE_GRAS " %s est en tête avec %d points !" RESET "\n",
+           joueurs[indexLeader].pseudo, joueurs[indexLeader].score_total);
+    printf(OR " ────────────────────────────────────────────" RESET "\n\n");
+}
+
+void afficherFinPartie(joueur *joueurs, int nb_joueur, int TAILLE) {
+    printf("\n\n");
+    printf(ROUGE_GRAS " FIN  DE  LA PARTIE" RESET "\n\n");
+    if (TAILLE <= 0)
+        printf(JAUNE_GRAS " LA PIOCHE EST VIDE...\n Le moment de découvrir les résultats est arrivé !\n" RESET);
+    else
+        printf(JAUNE_GRAS " UN JOUEUR A ATTEINT 200 POINTS !\n Le moment de découvrir les résultats est arrivé !\n" RESET);
+
+    printf("\n  Appuyez sur [Entree] pour afficher le classement final...");
+    getchar();
+
+    int maxFinal = -1;
+    int indexGagnant = 0;
+    for (int j = 0; j < nb_joueur; j++) {
+        if (joueurs[j].score_total > maxFinal) {
+            maxFinal = joueurs[j].score_total;
+            indexGagnant = j;
         }
     }
 
-    for (int p=0; p<nb_joueur; p++){
-        printf ("Score de %s à la fin de la manche : %d !\n",
-                joueurs[p].pseudo, joueurs[p].score_pot);
+    printf("\n " JAUNE_GRAS " 🏆 LE VAINQUEUR EST : %s !" RESET, joueurs[indexGagnant].pseudo);
+    printf("\n " BLANC_GRAS " Avec un score total de %d points." RESET "\n", maxFinal);
+    printf("\n" OR " ────────────────────────────────────────────" RESET "\n");
+    for (int j = 0; j < nb_joueur; j++) {
+        if (j == indexGagnant)
+            printf(" - " JAUNE_GRAS "%-10s : %d pts (VAINQUEUR)" RESET "\n", joueurs[j].pseudo, joueurs[j].score_total);
+        else
+            printf(" - %-10s : %d pts\n", joueurs[j].pseudo, joueurs[j].score_total);
     }
-
-    *dernierePioche = n;
-}
-
-/*void creerTableau(cartes tab[], int taille){
-    int i=0;
-    srand(time(NULL));
-    for (i=0; i<taille; i++){
-        tab[i].numero = rand()%13;
-    }
-    strcpy(tab[i++].bonus, "x2");
-    strcpy(tab[i++].bonus, "+2");
-    strcpy(tab[i++].bonus, "+4");
-    strcpy(tab[i++].bonus, "+6");
-    strcpy(tab[i++].bonus, "+8");
-    strcpy(tab[i++].bonus, "+10");
-}*/
-
-
-/*int verif (cartes tab[], int taille){
-int freq [13] = {0};
-for (int j=0; j<taille; j++){
-    freq[tab[j].numero]++;       //freq[tab[i]] va valoir tab[i]
-}
-if (freq[0] != 1 || freq[1] != 1) return 0; // tab incorrect
-for (int i=2; i<12; i++){
-    if (freq[i] != i) return 0;
-}
-return 1; // tab correct[]
-}*/
-
-void CahierDesCharges(int nb_joueur, int *taille, joueur joueur[]){
-    FILE *f = NULL;
-    f = fopen ("score_partie.txt", "w");
-    for (int i=0; i<nb_joueur; i++){
-        fprintf (f, "Le score de %s est %d !\n", joueur[i].pseudo, joueur[i].score_total);
-        fprintf (f, "Il possède les cartes : \n");
-        for (int j=0; j <joueur[i].nb_cartes; j++){
-            if (joueur[i].cartes[j].bonus[0] == '\0' ){
-                fprintf (f, " %d ", joueur[i].cartes[j].numero);
-            }
-            else {
-                fprintf(f, " %s ", joueur[i].cartes[j].bonus);
-            }
-            if (j < joueur[i].nb_cartes - 1){
-                fputc ('/', f);
-            }
-            }
-            fprintf (f," \n");
-        }
-    fclose(f);
-}
-
-int main(){
-    srand(time(NULL));
-    int nb_manche = 1;
-    //int TAILLE = 20;
-    int TAILLE = 85;
-    int dernierePioche=0;
-    int fin = 1;
-    int nb_joueur;
-    joueur joueur[50];
-    char prénom[50];
-    cartes tab[TAILLE];
-    corrigeTab(tab);
-    //affichage(tab, TAILLE);
-    melanger(tab, TAILLE);
-    affichage(tab, TAILLE);
-    
-    printf ("Combien de joueurs ? \n");
-    scanf ("%d", &nb_joueur);
-    for (int i=0; i<nb_joueur; i++){
-        printf ("Joueur %d quel est votre pseudo ?\n", i+1);
-        scanf (" %49s",joueur[i].pseudo);
-        //strcpy(joueur[i].pseudo, prénom);
-        printf ("Prénom du joueur %d est %s !\n", i+1, joueur[i].pseudo);
-    }
-    for (int a=0; a<nb_joueur; a++){
-    joueur[a].nb_cartes=0;
-    joueur[a].score_total=0;
-    }
-
-    do{
-        printf ("\n----------------------------Manche n°%d--------------------------\n\n", nb_manche);
-        manche(tab, nb_joueur, joueur, &TAILLE/*revoir*/,&dernierePioche);
-        nb_manche++;
-        printf ("Nombre de cartes restantes dans la pioche : %d\n", TAILLE);
-     for (int j=0; j<nb_joueur; j++){
-        joueur[j].score_total += joueur[j].score_pot;
-        printf ("Le score total de %s est %d !\n", joueur[j].pseudo, joueur[j].score_total);
-        if (joueur[j].score_total>=200){
-        fin=0;
-        }
-    }
-    }
-    while ( fin !=0  && TAILLE > 0);
-    char enregistrer;
-    do {
-        printf ("Voulez-vous enregistrer les scores de la partie ? o(oui) ou n(non)\n");
-        scanf (" %c", &enregistrer);
-    }
-    while (enregistrer != 'o' && enregistrer != 'n');
-        if (enregistrer == 'o'){
-            char nom_fichier[50];
-            printf ("Quel nom voudrait que le fichier se nomme ?\n");
-            scanf ("%s", nom_fichier);
-            CahierDesCharges(nb_joueur, &TAILLE, joueur);
-        }
-    //creerTableau(tab, N);
-    /*int v = verif(tab, N);
-    printf ("%d\n", v);
-    if (v==1){
-        melanger(tab, TAILLE);
-    }*/
-    return 0;
+    printf(OR" ────────────────────────────────────────────" RESET "\n\n");
 }
