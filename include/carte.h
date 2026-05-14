@@ -12,7 +12,5 @@ void melanger(cartes *tab, int taille);
 int effetNumero(cartes *tab, int taille);
 int effetBonus(char *bonus, int score);
 int carteExisteManche(cartes *main, int debut, int taille, cartes carte);
-int compterNumeros(joueur *j);
-int calculerScoreFinal( joueur *j, int elimine);
 
 #endif
