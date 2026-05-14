@@ -4,6 +4,7 @@
 
 
 void corrigeTab(cartes *tab) {
+    // creation des cartes numeros
     int i = 0;
     tab[i].numero = 0; tab[i].bonus[0] = '\0'; i++;
     tab[i].numero = 1; tab[i].bonus[0] = '\0'; i++;
@@ -11,6 +12,7 @@ void corrigeTab(cartes *tab) {
         for (int j = 0; j < n; j++) {
             tab[i].numero = n; tab[i].bonus[0] = '\0'; i++;
         }
+    //creation des cartes bonus
     tab[i].numero = -1; strcpy(tab[i++].bonus, "x2");
     tab[i].numero = -2; strcpy(tab[i++].bonus, "+2");
     tab[i].numero = -3; strcpy(tab[i++].bonus, "+4");
@@ -72,7 +74,8 @@ int calculerScoreFinal (joueur *j, int elimine){
     if(debut >= fin){
         return 0;
     }
-    if (elimine == 0){
+    if (elimine == 0){ 
+        //calcule des numeros seulement pour les joueurs n'etant pas eliminé
     for (int i=debut; i<fin; i++){
         if (j->cartes[i].bonus[0] == '\0'){
             score = effetNumero(j->cartes[i].numero, score);// ou score =+j->cartes[i].numero mais necessite de changer ou supprimer la fonction effetNumero
