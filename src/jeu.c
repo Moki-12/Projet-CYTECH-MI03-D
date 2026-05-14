@@ -28,7 +28,9 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
         joueurs[l].score_pot  = 0;
         joueurs[l].debutManche= joueurs[l].nb_cartes;
     }
-
+    
+    //debut d'une manche
+    
     do {
         nb_tour++;
 
@@ -40,7 +42,8 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                 free(arret); free(elimine);
                 return;
             }
-
+            // passe au joueur suivant
+            
             if (arret[j] == 1 || elimine[j] == 1) continue;
 
             // Boucle d'affichage et de saisie 
@@ -71,13 +74,15 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                 arret[j] = 1;
             } else {
                 // Récupération de la carte piochée 
+                
                 joueurs[j].cartes[joueurs[j].nb_cartes] = tab[n];
                 cartes c = joueurs[j].cartes[joueurs[j].nb_cartes];
                 int debut = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;
 
                 afficher_cartepiochée(c);
 
-                // Doublon ? 
+                // Verification de la présence d'un doublon dans les cartes piochées
+                
                 if (carteExisteManche(joueurs[j].cartes, debut, joueurs[j].nbCartesManche, c)) {
                     printf("\n");
                     printf(ROUGE_GRAS " 💀  DOUBLON !" RESET "\n");
@@ -91,6 +96,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                     joueurs[j].nb_cartes++;
                 } else {
                     // Carte valide : on applique seulement les numéros en temps réel 
+                    
                     if (c.bonus[0] == '\0')
                         joueurs[j].scores = effetNumero(c.numero, joueurs[j].scores);
                     joueurs[j].nb_cartes++;
@@ -112,6 +118,8 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                         (*taille)--;
                         break;
                     } else {
+                        // affichage des scores obtenus suivaant la carte piochée
+                        
                         printf(JAUNE_GRAS " ✦ Nouvelle carte obtenue !" RESET "\n");
                         if (c.bonus[0] == '\0')
                             printf(" Score : %d + %d = " BLANC_GRAS "%d pts" RESET "\n\n",
