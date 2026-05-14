@@ -15,4 +15,7 @@ typedef struct {
     int    flip7;
 } joueur;
 
+int compterNumeros(joueur *j);
+int calculerScoreFinal( joueur *j, int elimine);
+
 #endif
