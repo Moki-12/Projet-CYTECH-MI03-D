@@ -5,7 +5,8 @@
 #include "joueur.h"
 #include "carte.h"
 
-      
-void manche();
+void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernierePioche);
+void pause();
+void vide_buffer();
 
 #endif
