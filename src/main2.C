@@ -37,40 +37,7 @@ int main(){
         manche(tab, nb_joueur, joueur, &TAILLE, &dernierePioche);
         nb_manche++;
 
-        int maxScore    = -1;
-        int indexLeader = 0;
-        for(int j = 0; j < nb_joueur; j++){
-            joueur[j].score_total += joueur[j].score_pot;
-            if(joueur[j].score_total > maxScore){
-                maxScore    = joueur[j].score_total;
-                indexLeader = j;
-            }
-            if(joueur[j].score_total >= 200) fin = 0;
-        }
-
-        if(fin != 0 && TAILLE > 0){
-            printf("\n  " MAGENTA_GRAS "SCORES" RESET "\n");
-            for(int j = 0; j < nb_joueur; j++){
-                printf("\n  " BLANC_GRAS "★ %s" RESET, joueur[j].pseudo);
-                printf("\n  Score manche : %d", joueur[j].score_pot);
-
-                if(joueur[j].score_pot == 0)
-                    printf(ROUGE_GRAS " (Doublon)" RESET);
-                else {
-                    /* Flip 7 = 7 numéros — on recompte proprement */
-                    int nbNumerosAff = compterNumeros(&joueur[j]);
-                    if(nbNumerosAff >= 7)
-                        printf(VERT_GRAS " (Flip 7)" RESET);
-                }
-                printf("\n  " OR "SCORE TOTAL : %d" RESET "\n", joueur[j].score_total);
-            }
-            printf("\n  " OR "────────────────────────────────────────────" RESET "\n");
-            printf("  Cartes restantes dans la pioche : %d\n", TAILLE);
-            printf("  " JAUNE_GRAS "%s est en tête avec %d points !" RESET "\n",
-                   joueur[indexLeader].pseudo, joueur[indexLeader].score_total);
-            printf("  " OR "────────────────────────────────────────────" RESET "\n\n");
-        }
-
+        fin = ScoreFinManche(joueur, fin, nb_joueur, TAILLE);
     } while(fin != 0 && TAILLE > 0);
 
     AfficherFinPartie(TAILLE);
