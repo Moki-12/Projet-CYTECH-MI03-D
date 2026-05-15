@@ -9,7 +9,7 @@ typedef struct {
        
 void corrigeTab(cartes *tab);
 int melanger(cartes *tab, int taille);
-int effetNumero(cartes *tab, int taille);
+int effetNumero(int numero, int score);
 int effetBonus(char *bonus, int score);
 int carteExisteManche(cartes *main, int debut, int taille, cartes carte);
 
