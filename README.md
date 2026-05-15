@@ -7,7 +7,6 @@
 - [Règle du jeu](#règle-du-jeu)
 - [Pré-requis](#pré-requis)
 - [Guide d'installation](#guide-dinstallation)
-- [Guide d'utilisation](#guide-dutilisation)
 - [Structure du Projet](#structure-du-projet)
 - [Auteurs](#auteurs)
 
