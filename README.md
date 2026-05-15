@@ -43,27 +43,29 @@ make
 ./fliptech
 ```
 
-## Structure du Projet
+## Structure du Projet 📂
 
-├── include
+```text
+├── include/
 │   ├── affichage.h
 │   ├── carte.h
-│   ├── joueur.h
 │   ├── jeu.h
-│   ├── sauvegarde.h
-│
-├── src
+│   ├── joueur.h
+│   └── sauvegarde.h
+├── src/
 │   ├── affichage.c
 │   ├── carte.c
-│   ├── joueur.c
 │   ├── jeu.c
+│   ├── joueur.c
 │   ├── sauvegarde.c
 │   └── main.c
-│
 ├── Makefile
 └── README.md
+```
 
 ## Auteurs
+```markdown
 -Raphaêl Yoyotte
 -Yasmine Mouchrif
 -Saghina Robert
+```
