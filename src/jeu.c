@@ -1,7 +1,9 @@
-#include "carte.h"  
-#include "joueur.h"    
-#include <string.h>    
+#include <stdio.h>   
 #include <stdlib.h>
+#include "jeu.h"
+#include "carte.h"
+#include "joueur.h"
+#include "affichage.h" 
 
 
 void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernierePioche) {
