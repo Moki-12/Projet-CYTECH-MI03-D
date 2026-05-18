@@ -70,7 +70,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
 
             } while (sortir != 1 && (sortir != 2 || nb_tour <= 1));
 
-            if (sortir == 2) {
+            if (sortir == 2){
                 arret[j] = 1;
             } else {
                 // Récupération de la carte piochée 
