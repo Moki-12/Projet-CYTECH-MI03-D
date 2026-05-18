@@ -1,3 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>   
+#include "carte.h"    
+#include "joueur.h"   
+#include "affichage.h"
+#include "jeu.h"
+
+
 int main(){
     srand(time(NULL));
     int TAILLE = 20;
