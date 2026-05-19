@@ -5,17 +5,17 @@
  
 typedef struct {
     char   pseudo[100];
-    int    scores;
+    int    scores;         // le score obtenu après avoir pioché une carte
     cartes cartes[500];
     int    nb_cartes;
-    int    score_total;
+    int    score_total;   // le score total en fin de manche 
     int    nbCartesManche;
-    int    score_pot;
+    int    score_pot;    // le score potentiel en fin d'un tour
     int    debutManche;
     int    flip7;
 } joueur;
  
-int compterNumeros(joueur *j);
+int compterNumeros(joueur *j);                     
 int calculerScoreFinal(joueur *j, int elimine);
  
 #endif
