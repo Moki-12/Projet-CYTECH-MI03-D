@@ -6,23 +6,23 @@
 #include "jeu.h"
  
 void vide_buffer(void) {
-    while (getchar() != '\n');
+    while (getchar() != '\n');     // robustesse
 }
  
+void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernie
 void pause(void) {
-    printf("  Appuyez sur [Entree] pour passer au joueur suivant.\n");
+    printf("  Appuyez sur [Entree] pour passer au joueur suivant.\n");    //marquer une pause entre chaque action
     while (getchar() != '\n');
     getchar();
 }
  
-void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernierePioche) {
+void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *cmptPioche) {
     if (tab == NULL || joueurs == NULL || nb_joueur <= 0) exit(5);
- 
-    int nb_tour     = 0;
-    int n           = *dernierePioche;
+    int nb_tour = 0;
+    int n = *cmptPioche;
     int sortir;
     int verif;
-    int flip7       = 0;
+    int flip7 = 0;
     int joueur_actif = 0;
  
     int *arret   = malloc(nb_joueur * sizeof(int));
@@ -37,7 +37,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
         elimine[l]               = 0;
         joueurs[l].nbCartesManche = 0;
         joueurs[l].score_pot     = 0;
-        joueurs[l].debutManche   = joueurs[l].nb_cartes;
+        joueurs[l].debutManche   = joueurs[l].nb_cartes;  // pour ne pas écraser les cartes déjà piochées
     }
  
     do {
@@ -47,8 +47,9 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
  
             /* Pioche vide : arrêt immédiat */
             if (*taille == 0) {
-                *dernierePioche = n;
-                free(arret); free(elimine);
+                *cmptPioche = n;
+                free(arret); 
+                free(elimine);
                 return;
             }
  
@@ -150,7 +151,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
             joueurs[d].score_pot += 15;
     }
  
-    *dernierePioche = n;
+    *cmptPioche = n;
     free(elimine);
     free(arret);
 }
