@@ -31,7 +31,7 @@ int main(){
     joueur[a].score_total=0;
     }
     cartes tab[TAILLE];
-    corrigeTab(tab);
+    creerPioche(tab);
     //affichage(tab, TAILLE);
     melanger(tab, TAILLE);
     affichage(tab, TAILLE);
