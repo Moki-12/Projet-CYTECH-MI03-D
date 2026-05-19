@@ -1,14 +1,8 @@
-typedef struct {
-    char   pseudo[100];
-    int    scores;
-    cartes cartes[500]; // Sécurité contre l'overflow
-    int    nb_cartes;
-    int    score_total;
-    int    nbCartesManche;
-    int    score_pot;
-    int    debutManche;
-    int    flip7;
-} joueur;
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
 
 int compterNumeros(joueur *j) {
     if (j == NULL) exit(3);
