@@ -21,7 +21,7 @@ int main(void) {
  
     creerPioche(tab);
     melanger(tab, TAILLE);
-    printf(FOND_NOIR);
+
  
     afficher_accueil();
  
