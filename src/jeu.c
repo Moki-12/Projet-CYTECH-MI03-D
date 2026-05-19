@@ -137,7 +137,8 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
         /* Compte les joueurs encore actifs */
         joueur_actif = 0;
         for (int v = 0; v < nb_joueur; v++)
-            if (arret[v] == 0 && elimine[v] == 0) joueur_actif++;
+            if (arret[v] == 0 && elimine[v] == 0) 
+                joueur_actif++;
  
     } while (flip7 == 0 && joueur_actif > 0);
  
