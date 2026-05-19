@@ -3,7 +3,7 @@
  
 typedef struct {
     int  numero;
-    char bonus[5];  // 5 correponds au nombre de caractère du bonus
+    char bonus[5];  // stocke le texte du bonus ("+10", "x2") en incluant le '\0' 
 } cartes;
  
 void creerPioche(cartes *tab);   // remplit le tableau de 85 cartes qui constitue la pioche
