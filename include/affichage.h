@@ -4,7 +4,7 @@
 #include "carte.h"
 #include "joueur.h"
  
-/* Couleurs ANSI */
+// Couleurs ANSI 
 #define ROUGE_GRAS   "\x1b[1;31m"
 #define VERT_GRAS    "\x1b[1;32m"
 #define JAUNE_GRAS   "\x1b[1;93m"
@@ -27,6 +27,7 @@ void afficher_cartepiocher(cartes c);
 void afficherRisque(joueur *j, cartes *tab, int n, int taille);
 void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int taille);
 void afficherFinPartie(joueur *joueurs, int nb_joueur, int taille);
+
  
 #endif
  
