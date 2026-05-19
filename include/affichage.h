@@ -16,7 +16,6 @@
 #define BG_GOLD      " #ffd700"
 #define TEXT_BLACK   "\033[30m"
 #define MAGENTA_GRAS "\x1b[38;5;210m"
-#define FOND_NOIR    "\x1b[40m"
  
 void afficher_une_carte(cartes c, int ligne);
 void afficher_ligne_carte(cartes *tab_cartes, int taille);
