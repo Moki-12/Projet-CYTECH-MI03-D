@@ -2,18 +2,18 @@
 #include <stdlib.h>
 #include "carte.h"
  
-/* Crée toutes les cartes de la pioche */
+// Crée toutes les cartes de la pioche 
 void creerPioche(cartes *tab) {
     int i = 0;
- 
     /* Cartes numérotées : 0 et 1 en un seul exemplaire */
     tab[i].numero = 0; tab[i].bonus[0] = '\0'; i++;
-    tab[i].numero = 1; tab[i].bonus[0] = '\0'; i++;
+    tab[i].numero = 1; tab[i].bonus[0] = '\0'; i++;   
  
-    /* Cartes 2..12 : n exemplaires de la carte n */
+ 
+    /* Cartes 2 à 12 : n exemplaires de la carte n */
     for (int n = 2; n <= 12; n++)
         for (int j = 0; j < n; j++) {
-            tab[i].numero = n; tab[i].bonus[0] = '\0'; i++;
+            tab[i].numero = n; tab[i].bonus[0] = '\0'; i++;    
         }
  
     /* Cartes bonus */
