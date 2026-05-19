@@ -42,9 +42,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
  
     do {
         nb_tour++;
- 
         for (int j = 0; j < nb_joueur; j++) {
- 
             /* Pioche vide : arrêt immédiat */
             if (*taille == 0) {
                 *dernierePioche = n;
@@ -53,7 +51,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                 return;
             }
  
-            if (arret[j] == 1 || elimine[j] == 1) continue;
+            if (arret[j] == 1 || elimine[j] == 1) continue;  // Si le joueur actuel s'est arrêté ou est éliminé on passe directement au joueur suivant
  
             /* Boucle d'affichage et de saisie */
             do {
@@ -61,17 +59,16 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
  
                 if (joueurs[j].nbCartesManche >= 1) {
                     afficherMain(&joueurs[j]);
-                    printf("\n  Votre score potentiel : %d\n  ────────────────────────────────\n",
-                           joueurs[j].score_pot);
+                    printf("\n  Votre score potentiel : %d\n  ────────────────────────────────\n", joueurs[j].score_pot);
                     afficherStats(tab, n);
                     afficherRisque(&joueurs[j], tab, n, *taille);
                 }
  
                 do {
-                    if (nb_tour <= 1)
-                        printf(" %s que voulez vous faire ?\n [1] : Piocher\n", joueurs[j].pseudo);
+                    if (nb_tour <= 1)      // premier tour donc obligation de piocher 
+                        printf(" %s que voulez vous faire ? [1] : Piocher ", joueurs[j].pseudo);
                     else
-                        printf(" %s que voulez vous faire ?\n [1] : Piocher || [2] : S'arrêter\n\n", joueurs[j].pseudo);
+                        printf(" %s que voulez vous faire ? [1] : Piocher || [2] : S'arrêter ", joueurs[j].pseudo);
                     printf(" ────────────────────────────────────────\n");
                     verif = scanf("%d", &sortir);
                     vide_buffer();
@@ -84,7 +81,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
             } else {
                 /* Récupération de la carte piochée */
                 joueurs[j].cartes[joueurs[j].nb_cartes] = tab[n];
-                cartes c   = joueurs[j].cartes[joueurs[j].nb_cartes];
+                cartes c  = joueurs[j].cartes[joueurs[j].nb_cartes];
                 int debut  = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;
  
                 afficher_cartepiocher(c);
