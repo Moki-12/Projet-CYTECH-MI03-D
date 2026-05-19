@@ -79,10 +79,10 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
             if (sortir == 2) {
                 arret[j] = 1;
             } else {
-                /* Récupération de la carte piochée */
-                joueurs[j].cartes[joueurs[j].nb_cartes] = tab[n];
-                cartes c  = joueurs[j].cartes[joueurs[j].nb_cartes];
-                int debut  = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;
+               
+                joueurs[j].cartes[joueurs[j].nb_cartes] = tab[n];   // Récupération de la carte piochée 
+                cartes c  = joueurs[j].cartes[joueurs[j].nb_cartes];  // carte piochée
+                int debut  = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;  // première carte de la main du joueur dans la manche
  
                 afficher_cartepiocher(c);
  
@@ -93,13 +93,13 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                     printf(" Aïe ! vous venez de piocher un %d alors que vous en aviez déjà un.\n", c.numero);
                     printf(" Vous êtes éliminé pour le reste de la manche.\n");
                     printf("\n  " ROUGE_GRAS "Votre score pour cette manche est donc de 0." RESET "\n\n");
-                    joueurs[j].scores    = 0;
+                    joueurs[j].scores = 0;
                     joueurs[j].score_pot = 0;
-                    elimine[j]           = 1;
+                    elimine[j] = 1;
                     joueurs[j].nb_cartes++;
-                } else {
-                    /* Carte valide */
-                    if (c.bonus[0] == '\0')
+                }  else {
+                    // si la carte n'est pas un doublon
+                    if (c.bonus[0] == '\0') 
                         joueurs[j].scores = effetNumero(c.numero, joueurs[j].scores);
                     joueurs[j].nb_cartes++;
                     joueurs[j].nbCartesManche++;
@@ -117,11 +117,11 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                         n++;
                         (*taille)--;
                         break;
-                    } else {
+                    } 
+                    else {
                         printf(JAUNE_GRAS " ✦ Nouvelle carte obtenue !" RESET "\n");
                         if (c.bonus[0] == '\0')
-                            printf(" Score : %d + %d = " BLANC_GRAS "%d pts" RESET "\n\n",
-                                   joueurs[j].scores - c.numero, c.numero, joueurs[j].score_pot);
+                            printf(" Score : %d + %d = " BLANC_GRAS "%d points" RESET "\n\n", joueurs[j].scores - c.numero, c.numero, joueurs[j].score_pot);
                         else
                             printf(" Bonus " JAUNE_GRAS "%s" RESET " obtenu ! Sera appliqué en fin de manche.\n\n",
                                    c.bonus);
