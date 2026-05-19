@@ -42,7 +42,7 @@ make
 ./fliptech
 ```
 
-## Structure du Projet 📂
+## Structure du Projet 
 
 ```text
 ├── include/
@@ -64,7 +64,7 @@ make
 
 ## Auteurs
 ```markdown
--Raphaêl Yoyotte
+-Raphaël Yoyotte
 -Yasmine Mouchrif
 -Saghina Robert
 ```
