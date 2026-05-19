@@ -16,10 +16,10 @@ void pause(void) {
     getchar();
 }
  
-void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernierPioche) {
+void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernierePioche) {
     if (tab == NULL || joueurs == NULL || nb_joueur <= 0) exit(5);
     int nb_tour = 0;
-    int n = *dernierePioche;
+    int n = *dernierePioche; // là où se trouve le prochain endroit où l'on doit piocher dans la pioche
     int sortir; 
     int verif;  // robustesse
     int flip7 = 0;
@@ -110,11 +110,10 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                     if (nbNumeros >= 7 && c.bonus[0] == '\0') {
                         printf("  " JAUNE_GRAS "★ FLIP 7 !" RESET "\n");
                         printf(" Vous venez de collecter 7 numéros différents ! Un bonus vous est accordé !\n");
-                        printf("\n  %d + " JAUNE_GRAS "15" RESET " = " BLANC_GRAS "%d" RESET "\n\n",
-                               joueurs[j].score_pot, joueurs[j].score_pot + 15);
+                        printf("\n  %d + " JAUNE_GRAS "15" RESET " = " BLANC_GRAS "%d" RESET "\n\n", joueurs[j].score_pot, joueurs[j].score_pot + 15);
                         joueurs[j].flip7 = 1;
-                        flip7            = 1;
-                        n++;
+                        flip7 = 1;
+                        n++;              
                         (*taille)--;
                         break;
                     } 
@@ -123,14 +122,15 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                         if (c.bonus[0] == '\0')
                             printf(" Score : %d + %d = " BLANC_GRAS "%d points" RESET "\n\n", joueurs[j].scores - c.numero, c.numero, joueurs[j].score_pot);
                         else
-                            printf(" Bonus " JAUNE_GRAS "%s" RESET " obtenu ! Sera appliqué en fin de manche.\n\n",
-                                   c.bonus);
+                            printf(" Bonus " JAUNE_GRAS "%s" RESET " obtenu ! Il sera appliqué en fin de manche.\n\n", c.bonus);
                     }
                 }
  
-                if (sortir == 1) pause();
+                if (sortir == 1){     // éviter l'overflow
+                 pause();
                 (*taille)--;
-                n++;
+                n++; 
+                }
             }
         }
  
@@ -148,7 +148,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
             joueurs[d].score_pot += 15;
     }
  
-    *cmptPioche = n;
+    *dernierePioche = n;
     free(elimine);
     free(arret);
 }
