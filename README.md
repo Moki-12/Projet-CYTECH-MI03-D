@@ -33,7 +33,7 @@ FlipTech est un jeu de cartes de prise de risque développé en langage C. Le bu
 git clone https://github.com/Moki-12/Projet-CYTECH-MI03-D.git 
 
 # Accédez au répertoire
-cd FlipTech
+cd Projet-CYTECH-MI03-D
 
 # Compilez le projet
 make
