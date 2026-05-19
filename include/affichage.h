@@ -1,6 +1,6 @@
 #ifndef AFFICHAGE_H
 #define AFFICHAGE_H
- 
+ git clone https://github.com/charmelle5/Projet-MEF2-K.git
 #include "carte.h"
 #include "joueur.h"
  
