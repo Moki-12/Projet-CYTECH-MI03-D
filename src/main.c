@@ -8,62 +8,93 @@
 #include "jeu.h"
 
 
-int main(){
+
+int main() {
     srand(time(NULL));
-    int TAILLE = 20;
-    //int TAILLE = 85;
-    int dernierePioche=0;
-    int fin;
+    int nb_manche      = 1;
+    int TAILLE         = 85;
+    int dernierePioche = 0;
+    int fin            = 1;
     int nb_joueur;
-    joueur joueur[50];
-    char prénom[50];
-   
-    printf ("Combien de joueurs ? \n");
-    scanf ("%d", &nb_joueur);
-    for (int i=0; i<nb_joueur; i++){
-        printf ("Joueur %d quel est votre pseudo ?\n", i+1);
-        scanf (" %s",prénom);
-        strcpy(joueur[i].pseudo, prénom);
-        printf ("Prénom du joueur %d est %s !\n", i+1, joueur[i].pseudo);
-    }
-    for (int a=0; a<nb_joueur; a++){
-    joueur[a].nb_cartes=0;
-    joueur[a].score_total=0;
-    }
-    cartes tab[TAILLE];
-    creerPioche(tab);
-    //affichage(tab, TAILLE);
+    joueur *joueurs;
+    cartes tab[85];
+    int verif;
+
+    corrigeTab(tab);
     melanger(tab, TAILLE);
-    affichage(tab, TAILLE);
-    do{
-        manche(tab, nb_joueur, joueur, &TAILLE/*revoir*/,&dernierePioche);
-        printf ("Nombre de cartes restantes dans la pioche : %d\n", TAILLE);
-     for (int j=0; j<nb_joueur; j++){
-        joueur[j].score_total += joueur[j].scores;
-        printf ("Le score total de %s est %d !\n", joueur[j].pseudo, joueur[j].score_total);
-        if (joueur[j].score_total>=200){
-        fin=0;
+    printf(FOND_NOIR);
+
+    afficher_accueil();
+
+    // Saisie du nombre de joueurs 
+    do {
+        printf(" Combien de joueurs ? ");
+        verif = scanf("%d", &nb_joueur);
+        vide_buffer();
+    } while (nb_joueur <= 0 || verif != 1);
+
+    joueurs = malloc(nb_joueur * sizeof(joueur));
+    if (joueurs == NULL) { printf("Erreur allocation\n"); return 1; }
+
+    // Saisie des pseudos 
+    for (int i = 0; i < nb_joueur; i++) {
+        printf(" Joueur %d quel est votre pseudo ? ", i + 1);
+        scanf(" %s", joueurs[i].pseudo);
+        vide_buffer();
+        printf("\n");
+        printf(" Bienvenue %s !\n", joueurs[i].pseudo);
+    }
+
+    // Initialisation des scores totaux 
+    for (int a = 0; a < nb_joueur; a++) {
+        joueurs[a].nb_cartes   = 0;
+        joueurs[a].score_total = 0;
+        joueurs[a].debutManche = 0;
+    }
+
+    // Boucle principale de la partie 
+    do {
+        printf("\n"); 
+        printf(JAUNE_GRAS " MANCHE  N°%d " RESET "\n\n", nb_manche);
+        manche(tab, nb_joueur, joueurs, &TAILLE, &dernierePioche);
+        nb_manche++;
+
+        // Calcul des scores totaux et du leader 
+        int maxScore    = -1;
+        int indexLeader = 0;
+        for (int j = 0; j < nb_joueur; j++) {
+            joueurs[j].score_total += joueurs[j].score_pot;
+            if (joueurs[j].score_total > maxScore) {
+                maxScore    = joueurs[j].score_total;
+                indexLeader = j;
+            }
+            if (joueurs[j].score_total >= 200) fin = 0;
         }
-    }
-    }
-    while ( fin !=0  && TAILLE > 0);
+
+        // Affichage des scores entre les manches si la partie continue 
+        if (fin != 0 && TAILLE > 0)
+            afficherScoresManche(joueurs, nb_joueur, indexLeader, TAILLE);
+
+    } while (fin != 0 && TAILLE > 0);
+
+    // Fin de partie 
+    afficherFinPartie(joueurs, nb_joueur, TAILLE);
+
+    // Proposition de sauvegarde 
     char enregistrer;
     do {
-        printf ("Voulez-vous enregistrer les scores de la partie ? o(oui) ou n(non)\n");
-        scanf (" %c", &enregistrer);
+        printf(" Voulez-vous enregistrer les scores ? o(oui) ou n(non)\n");
+        scanf(" %c", &enregistrer);
+        vide_buffer();
+    } while (enregistrer != 'o' && enregistrer != 'n');
+
+    if (enregistrer == 'o') {
+        char nom_fichier[50];
+        printf(" Nom du fichier (sans extension) : ");
+        scanf("%s", nom_fichier);
+        vide_buffer();
+        CahierDesCharges(nb_joueur, joueurs, nom_fichier);
     }
-    while (enregistrer != 'o' && enregistrer != 'n');
-        if (enregistrer == 'o'){
-            char nom_fichier[50];
-            printf ("Quel nom voudrait que le fichier se nomme ?\n");
-            scanf ("%s", nom_fichier);
-            CahierDesCharges(nb_joueur, &TAILLE, joueur);
-        }
-    //creerTableau(tab, N);
-    /*int v = verif(tab, N);
-    printf ("%d\n", v);
-    if (v==1){
-        melanger(tab, TAILLE);
-    }*/
+
+    free(joueurs);
     return 0;
-}
