@@ -1,7 +1,7 @@
 #ifndef AFFICHAGE_H
 #define AFFICHAGE_H
 
-#include "cartes.h"
+#include "carte.h"
 #include "joueur.h"
 
 // Couleurs ANSI
