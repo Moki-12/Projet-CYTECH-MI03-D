@@ -6,20 +6,20 @@
 #include "jeu.h"
  
 void vide_buffer(void) {
-    while (getchar() != '\n');     // robustesse
+    while (getchar() != '\n');     // robustesse : Vide le tampon d'entrée 
 }
  
 void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernie
 void pause(void) {
-    printf("  Appuyez sur [Entree] pour passer au joueur suivant.\n");    //marquer une pause entre chaque action
+    printf("  Appuyez sur [Entree] pour passer au joueur suivant.\n");    //marquer un temps d'arrêt entre chaque action
     while (getchar() != '\n');
     getchar();
 }
  
-void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *cmptPioche) {
+void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernierPioche) {
     if (tab == NULL || joueurs == NULL || nb_joueur <= 0) exit(5);
     int nb_tour = 0;
-    int n = *cmptPioche;
+    int n = *dernierePioche;
     int sortir;
     int verif;
     int flip7 = 0;
@@ -47,7 +47,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *cmptP
  
             /* Pioche vide : arrêt immédiat */
             if (*taille == 0) {
-                *cmptPioche = n;
+                *dernierePioche = n;
                 free(arret); 
                 free(elimine);
                 return;
