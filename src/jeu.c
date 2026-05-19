@@ -9,7 +9,6 @@ void vide_buffer(void) {
     while (getchar() != '\n');     // robustesse : Vide le tampon d'entrée 
 }
  
-void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernie
 void pause(void) {
     printf("  Appuyez sur [Entree] pour passer au joueur suivant.\n");    //marquer un temps d'arrêt entre chaque action
     while (getchar() != '\n');
