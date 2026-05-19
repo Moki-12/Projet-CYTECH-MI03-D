@@ -151,3 +151,13 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
     free(elimine);
     free(arret);
 } 
+
+void pause() {
+    printf(" Appuyez sur [Entree] pour passer au joueur suivant.\n");
+    getchar();
+}
+
+void vide_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
