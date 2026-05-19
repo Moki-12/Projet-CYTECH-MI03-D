@@ -1,8 +1,9 @@
 #ifndef SAUVEGARDE_H
 #define SAUVEGARDE_H
-
+ 
 #include "joueur.h"
-
-void CahierDesCharges(joueur *joueurs, int nb_joueurs);
-
+ 
+void CahierDesCharges(int nb_joueur, joueur *joueurs, char *nom_fichier);
+ 
 #endif
+ 
