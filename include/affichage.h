@@ -17,16 +17,16 @@
 #define TEXT_BLACK   "\033[30m"
 #define MAGENTA_GRAS "\x1b[38;5;210m"
  
-void afficher_une_carte(cartes c, int ligne);
-void afficher_ligne_carte(cartes *tab_cartes, int taille);
+void afficher_une_carte(cartes c, int ligne);     // affiche une seule ligne d'une carte
+void afficher_ligne_carte(cartes *tab_cartes, int taille);   // affiche un tableau de cartes côte à côte avec afficher_une_carte
 void afficher_accueil(void);
 void afficher_tour(joueur *j, int tour);
 void afficherMain(joueur *j);
-void afficherStats(cartes *tab, int n);
+void afficherStats(cartes *tab, int n); // affiche combien de fois chaque numéro est déjà sorti
 void afficher_cartepiocher(cartes c);
-void afficherRisque(joueur *j, cartes *tab, int n, int taille);
+void afficherRisque(joueur *j, cartes *tab, int n, int taille);  // calcule combien d'exemplaires de chaque carte du joueur sont encore dans la pioche
 void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int taille);
-void afficherFinPartie(joueur *joueurs, int nb_joueur, int taille);
+void afficherFinPartie(joueur *joueurs, int nb_joueur, int taille);  // affiche le classement final et le vainqueur à la fin de la partie
 
  
 #endif
