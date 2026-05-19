@@ -13,7 +13,7 @@
 #define BLANC_GRAS   "\x1b[1;37m"
 #define RESET        "\x1b[0m"
 #define BG_WHITE     "\033[47m"
-#define BG_GOLD      "\033[43m"
+#define BG_GOLD      " #ffd700"
 #define TEXT_BLACK   "\033[30m"
 #define MAGENTA_GRAS "\x1b[38;5;210m"
 #define FOND_NOIR    "\x1b[40m"
