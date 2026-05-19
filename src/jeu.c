@@ -6,7 +6,7 @@
 #include "jeu.h"
  
 void vide_buffer(void) {
-    while (getchar() != '\n');     // robustesse : Vide le tampon d'entrée 
+    while (getchar() != '\n');     // robustesse : vide le tampon  
 }
  
 void pause(void) {
@@ -18,9 +18,9 @@ void pause(void) {
 void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernierePioche) {
     if (tab == NULL || joueurs == NULL || nb_joueur <= 0) exit(5);
     int nb_tour = 0;
-    int n = *dernierePioche; // là où se trouve le prochain endroit où l'on doit piocher dans la pioche
-    int sortir; 
-    int verif;  // robustesse
+    int n = *dernierePioche; // l'indice du prochain endroit où le joueur doit piocher dans le tab des cartes
+    int sortir; // choix du joueur entre piocher ou s'arrêter
+    int verif;  // robustesse : vérifie si un entier à bien été saisi
     int flip7 = 0;
     int joueur_actif = 0;
  
@@ -35,14 +35,15 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
         joueurs[l].flip7 = 0;
         elimine[l]  = 0;
         joueurs[l].nbCartesManche = 0;
-        joueurs[l].score_pot     = 0;
-        joueurs[l].debutManche   = joueurs[l].nb_cartes;  // pour ne pas écraser les cartes déjà piochées
+        joueurs[l].score_pot = 0;
+        joueurs[l].debutManche = joueurs[l].nb_cartes;  // pour ne pas écraser les cartes déjà piochées de la manche précédente
     }
  
     do {
         nb_tour++;
         for (int j = 0; j < nb_joueur; j++) {
-            /* Pioche vide : arrêt immédiat */
+         
+            // si pioche vide : on sauvegarde la position et on sort
             if (*taille == 0) {
                 *dernierePioche = n;
                 free(arret); 
@@ -50,13 +51,13 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                 return;
             }
  
-            if (arret[j] == 1 || elimine[j] == 1) continue;  // Si le joueur actuel s'est arrêté ou est éliminé on passe directement au joueur suivant
+            if (arret[j] == 1 || elimine[j] == 1) continue;  // si le joueur actuel s'est arrêté ou est éliminé on passe directement au joueur suivant
  
-            /* Boucle d'affichage et de saisie */
+            // boucle d'affichage et de saisie du choix du joueur
             do {
                 afficher_tour(&joueurs[j], nb_tour);
  
-                if (joueurs[j].nbCartesManche >= 1) {
+                if (joueurs[j].nbCartesManche >= 1) {  // n'affiche la main et les stats que si le joueur a déjà pioché au moins une carte cette manche
                     afficherMain(&joueurs[j]);
                     printf("\n  Votre score potentiel : %d\n  ────────────────────────────────\n", joueurs[j].score_pot);
                     afficherStats(tab, n);
@@ -64,7 +65,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                 }
  
                 do {
-                    if (nb_tour <= 1)      // premier tour donc obligation de piocher 
+                    if (nb_tour <= 1)      // premier tour donc obligation de piocher on ne peux pas s'arrêter
                         printf(" %s que voulez vous faire ? [1] : Piocher ", joueurs[j].pseudo);
                     else
                         printf(" %s que voulez vous faire ? [1] : Piocher || [2] : S'arrêter ", joueurs[j].pseudo);
@@ -79,13 +80,13 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                 arret[j] = 1;
             } else {
                
-                joueurs[j].cartes[joueurs[j].nb_cartes] = tab[n];   // Récupération de la carte piochée 
+                joueurs[j].cartes[joueurs[j].nb_cartes] = tab[n];   // copie la carte à l'indice n dans le tab joueur
                 cartes c  = joueurs[j].cartes[joueurs[j].nb_cartes];  // carte piochée
-                int debut  = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;  // première carte de la main du joueur dans la manche
+                int debut  = joueurs[j].nb_cartes - joueurs[j].nbCartesManche;  // indice de la première carte de cla manche dans tab du joueur
  
                 afficher_cartepiocher(c);
  
-                /* Vérification doublon */
+                // Vérification doublon 
                 if (carteExisteManche(joueurs[j].cartes, debut, joueurs[j].nbCartesManche, c)) {
                     printf("\n");
                     printf(ROUGE_GRAS " 💀  DOUBLON !" RESET "\n");
@@ -94,7 +95,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                     printf("\n  " ROUGE_GRAS "Votre score pour cette manche est donc de 0." RESET "\n\n");
                     joueurs[j].scores = 0;
                     joueurs[j].score_pot = 0;
-                    elimine[j] = 1;
+                    elimine[j] = 1;   // le joueur est éliminé de la manche
                     joueurs[j].nb_cartes++;
                 }  else {
                     // si la carte n'est pas un doublon
@@ -102,9 +103,9 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                         joueurs[j].scores = effetNumero(c.numero, joueurs[j].scores);
                     joueurs[j].nb_cartes++;
                     joueurs[j].nbCartesManche++;
-                    joueurs[j].score_pot = calculerScoreFinal(&joueurs[j], 0);
+                    joueurs[j].score_pot = calculerScoreFinal(&joueurs[j], 0);  // recalcule le score potentiel complet (numéros + bonus) après chaque pioche
  
-                    /* Test Flip 7 */
+                    // détection flip7
                     int nbNumeros = compterNumeros(&joueurs[j]);
                     if (nbNumeros >= 7 && c.bonus[0] == '\0') {
                         printf("  " JAUNE_GRAS "★ FLIP 7 !" RESET "\n");
@@ -112,8 +113,8 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                         printf("\n  %d + " JAUNE_GRAS "15" RESET " = " BLANC_GRAS "%d" RESET "\n\n", joueurs[j].score_pot, joueurs[j].score_pot + 15);
                         joueurs[j].flip7 = 1;
                         flip7 = 1;
-                        n++;              
-                        (*taille)--;
+                        n++;           // avance l'indice dans la pioche    
+                        (*taille)--;      // décrémente le nombre de cartes restantes
                         break;
                     } 
                     else {
@@ -121,11 +122,11 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                         if (c.bonus[0] == '\0')
                             printf(" Score : %d + %d = " BLANC_GRAS "%d points" RESET "\n\n", joueurs[j].scores - c.numero, c.numero, joueurs[j].score_pot);
                         else
-                            printf(" Bonus " JAUNE_GRAS "%s" RESET " obtenu ! Il sera appliqué en fin de manche.\n\n", c.bonus);
+                            printf(" Bonus " JAUNE_GRAS "%s" RESET " obtenu ! \n\n", c.bonus);
                     }
                 }
  
-                if (sortir == 1){     // éviter l'overflow
+                if (sortir == 1){    //le joueur a pioché normalement (pas un Flip 7 qui sort par break)
                  pause();
                 (*taille)--;
                 n++; 
@@ -133,7 +134,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
             }
         }
  
-        /* Compte les joueurs encore actifs */
+        // Compte les joueurs encore actifs 
         joueur_actif = 0;
         for (int v = 0; v < nb_joueur; v++)
             if (arret[v] == 0 && elimine[v] == 0) 
@@ -141,14 +142,14 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
  
     } while (flip7 == 0 && joueur_actif > 0);
  
-    /* Calcul des scores finaux en fin de manche */
+    // calcul des scores finaux en fin de manche 
     for (int d = 0; d < nb_joueur; d++) {
         joueurs[d].score_pot = calculerScoreFinal(&joueurs[d], elimine[d]);
         if (joueurs[d].flip7 == 1)
             joueurs[d].score_pot += 15;
     }
  
-    *dernierePioche = n;
+    *dernierePioche = n;  // sauvegarde la position dans la pioche pour la manche suivante
     free(elimine);
     free(arret);
 }
