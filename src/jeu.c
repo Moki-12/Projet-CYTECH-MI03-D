@@ -20,21 +20,21 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
     if (tab == NULL || joueurs == NULL || nb_joueur <= 0) exit(5);
     int nb_tour = 0;
     int n = *dernierePioche;
-    int sortir;
-    int verif;
+    int sortir; 
+    int verif;  // robustesse
     int flip7 = 0;
     int joueur_actif = 0;
  
-    int *arret   = malloc(nb_joueur * sizeof(int));
+    int *arret = malloc(nb_joueur * sizeof(int));
     int *elimine = malloc(nb_joueur * sizeof(int));
     if (arret == NULL || elimine == NULL) { printf("Erreur allocation\n"); exit(1); }
  
     /* Initialisation de la manche */
     for (int l = 0; l < nb_joueur; l++) {
-        joueurs[l].scores        = 0;
-        arret[l]                 = 0;
-        joueurs[l].flip7         = 0;
-        elimine[l]               = 0;
+        joueurs[l].scores  = 0;
+        arret[l]  = 0;
+        joueurs[l].flip7 = 0;
+        elimine[l]  = 0;
         joueurs[l].nbCartesManche = 0;
         joueurs[l].score_pot     = 0;
         joueurs[l].debutManche   = joueurs[l].nb_cartes;  // pour ne pas écraser les cartes déjà piochées
