@@ -1,4 +1,4 @@
-# 🃏 PROJET FLIPTECH
+# PROJET FLIPTECH 🃏
 
 
 ## Table des matières
