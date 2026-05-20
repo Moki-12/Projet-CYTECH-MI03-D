@@ -116,61 +116,42 @@ void afficher_cartepiocher(cartes c) {
 void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
     int stats_danger[13] = {0};    // nombre d'exemplaires de chaque carte déjà sortis
 
-    // compte les cartes numérotées déjà sorties de la pioche
-    for (int s = 0; s < n; s++)
-        if (tab[s].bonus[0] == '\0' && tab[s].numero >= 0 && tab[s].numero <= 12)
+    // Compte les cartes numéros déjà sorties de la pioche
+    for (int s = 0; s < n; s++) {
+        if (tab[s].bonus[0] == '\0' && tab[s].numero >= 0 && tab[s].numero <= 12) {
             stats_danger[tab[s].numero]++;
+        }
+    }
  
-    int dangerTotal = 0;
-    printf(" ────────────────────────────────\n");
+    printf(" ───────────────────────────────────────────────────────────────────────\n");
     printf(MAGENTA_GRAS " ANALYSE DU RISQUE \n\n" RESET);
 
-    // pour chaque carte numérotée dans la main du joueur on calcule le risque
+    int cartes_comptees = 0;
+    printf(" Vous possédez dans votre main les cartes suivantes :\n");
+    
+    // Pour chaque carte numéro dans la main du joueur on affiche sa présence dans la pioche
     for (int m = j->debutManche; m < j->nb_cartes; m++) {
-        if (j->cartes[m].bonus[0] != '\0')
+        if (j->cartes[m].bonus[0] != '\0') {
             continue;    // on ignore les cartes bonus car elles ne créent pas de doublon
- 
-        int num_carte = j->cartes[m].numero;
-        int restantes = num_carte - stats_danger[num_carte];   // exemplaires encore dans la pioche = total exemplaire de la carte - cartes sorties
-        if (restantes < 0){   // sécurité pour ne peut pas être négatif
-         restantes = 0;
         }
- 
-        dangerTotal += restantes;
-        printf(" - Carte" JAUNE_GRAS " %d" RESET " : " ROUGE_GRAS "%d " RESET "encore dans la pioche\n",
+        
+        int num_carte = j->cartes[m].numero;
+        int restantes = num_carte - stats_danger[num_carte]; // total exemplaire - sorties
+        if (restantes < 0) {
+            restantes = 0;
+        }
+        printf( JAUNE_GRAS " - Carte %d" RESET " : " ROUGE_GRAS "%d " RESET "encore dans la pioche\n",
                num_carte, restantes);
+        cartes_comptees += restantes;
     }
 
-    // calcul du risque global en pourcentage 
-    float risque;
+    // Calcul de la probabilité brute de doublon
+    float risque = 0.0f;
     if (taille > 0) {
-    // Calcul du pourcentage de risque (dangerTotal / taille) sur 100 
-    risque = (dangerTotal * 100.0f) / taille;
-    } else {
-       // Si la pioche est vide le risque de piocher un doublon est nul 
-       risque = 0.0f;
+        risque = (cartes_comptees * 100.0f) / taille;
     }
- 
-    printf(" Total cartes dangereuses : %d sur %d cartes restantes\n", dangerTotal, taille);
-    printf(" Probabilité de doublon : ");
-
-    // affichage coloré selon le niveau de risque
-    if (risque < 20.0f)
-        printf(VERT_GRAS "%.1f%%\n" RESET, risque);
-    else if (risque < 37.0f)
-        printf(JAUNE_GRAS "%.1f%%\n" RESET, risque);
-    else
-        printf(ROUGE_GRAS "%.1f%%\n" RESET, risque);
- 
-    printf("\n Conseil : ");
-    if (risque < 20.0f)
-        printf(VERT_GRAS "Risque faible — Piochez en toute tranquillité !\n" RESET);
-    else if (risque < 37.0f)
-        printf(JAUNE_GRAS "Risque moyen — Réfléchissez bien avant de piocher !\n" RESET);
-    else
-        printf(ROUGE_GRAS "Risque elevé — Il serait préférable de vous arrêter !\n" RESET);
- 
-    printf(" ──────────────────────────────────────\n\n");
+    printf("\n Probabilité de doublon : %.1f%%\n", risque);
+    printf(" ────────────────────────────────────────────────────────────────────────\n\n");
 }
  
 void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int taille) {
@@ -205,8 +186,9 @@ void afficherFinPartie(joueur *joueurs, int nb_joueur, int taille) {
  
     printf("\n  Appuyez sur [Entree] pour afficher le classement final...");
     getchar();
- 
-    int maxFinal     = -1;
+
+    // recherche du gagnant
+    int maxFinal     = -1;   // initialisé à -1 pour être sûr que n'importe quel score positif le dépasse
     int indexGagnant = 0;
     for (int j = 0; j < nb_joueur; j++) {
         if (joueurs[j].score_total > maxFinal) {
@@ -218,6 +200,8 @@ void afficherFinPartie(joueur *joueurs, int nb_joueur, int taille) {
     printf("\n " JAUNE_GRAS " 🏆 LE VAINQUEUR EST : %s !" RESET, joueurs[indexGagnant].pseudo);
     printf("\n " BLANC_GRAS " Avec un score total de %d points." RESET "\n", maxFinal);
     printf("\n" OR " ────────────────────────────────────────────" RESET "\n");
+
+    // affiche tous les joueurs
     for (int j = 0; j < nb_joueur; j++) {
         if (j == indexGagnant)
             printf(" - " JAUNE_GRAS "%-10s : %d pts (VAINQUEUR)" RESET "\n",
