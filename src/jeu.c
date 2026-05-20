@@ -12,7 +12,6 @@ void vide_buffer(void) {
 void pause(void) {
     printf("  Appuyez sur [Entree] pour passer au joueur suivant.\n");    //marquer un temps d'arrêt entre chaque action
     while (getchar() != '\n');
-    getchar();
 }
  
 void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *dernierePioche) {
@@ -68,7 +67,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                     if (nb_tour <= 1)      // premier tour donc obligation de piocher on ne peux pas s'arrêter
                         printf(" %s que voulez vous faire ? [1] : Piocher ", joueurs[j].pseudo);
                     else
-                        printf(" %s que voulez vous faire ? [1] : Piocher || [2] : S'arrêter ", joueurs[j].pseudo);
+                        printf(" %s que voulez vous faire ?  Piocher : [1] ou S'arrêter : [2]\n ", joueurs[j].pseudo);
                     printf(" ────────────────────────────────────────\n");
                     verif = scanf("%d", &sortir);
                     vide_buffer();
