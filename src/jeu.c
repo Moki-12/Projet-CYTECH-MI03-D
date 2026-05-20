@@ -65,12 +65,12 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
  
                 do {
                     if (nb_tour <= 1)      // premier tour donc obligation de piocher on ne peux pas s'arrêter
-                        printf(" %s que voulez vous faire ? [1] : Piocher ", joueurs[j].pseudo);
+                        printf(" %s que voulez vous faire ? Piocher : [1]\n ", joueurs[j].pseudo);
                     else
                         printf(" %s que voulez vous faire ?  Piocher : [1] ou S'arrêter : [2]\n ", joueurs[j].pseudo);
-                    printf(" ────────────────────────────────────────\n");
                     verif = scanf("%d", &sortir);
                     vide_buffer();
+                    printf(" ────────────────────────────────────────\n");
                 } while (verif != 1);
  
             } while (sortir != 1 && (sortir != 2 || nb_tour <= 1));
