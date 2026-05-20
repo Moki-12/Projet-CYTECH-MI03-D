@@ -59,7 +59,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
  
                 if (joueurs[j].nbCartesManche >= 1) {  // n'affiche la main et les stats que si le joueur a déjà pioché au moins une carte cette manche
                     afficherMain(&joueurs[j]);
-                    printf("\n  Votre score potentiel : %d\n  ────────────────────────────────\n", joueurs[j].score_pot);
+                    printf( JAUNE_GRAS "\n  Votre score potentiel : %d " RESET "\n  ────────────────────────────────\n", joueurs[j].score_pot);
                     afficherStats(tab, n);
                     afficherRisque(&joueurs[j], tab, n, *taille);
                 }
