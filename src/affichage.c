@@ -41,10 +41,10 @@ void afficher_accueil(void) {     // void en paramètre = sécurité contre les 
  
 void afficher_tour(joueur *j, int tour) {
     printf("\n");
-    printf(OR " ┌──────────────────────────────────────────────────────────────────────────────┐" RESET "\n");
-    printf(OR " │ " ROUGE_GRAS " AU TOUR DE %-20s" RESET, j->pseudo);
-    printf(OR "                                      Tour %d │" RESET "\n", tour);
-    printf(OR " └──────────────────────────────────────────────────────────────────────────────┘" RESET "\n");
+    printf(ROUGE_GRAS " ┌──────────────────────────────────────────────────────────────────────────────┐" RESET "\n");
+    printf(ROUGE_GRAS " │ " OR " AU TOUR DE %-20s" RESET, j->pseudo);
+    printf(ROUGE_GRAS "                                      Tour %d │" RESET "\n", tour);
+    printf(ROUGE_GRAS " └──────────────────────────────────────────────────────────────────────────────┘" RESET "\n");
     printf("\n");
 }
  
