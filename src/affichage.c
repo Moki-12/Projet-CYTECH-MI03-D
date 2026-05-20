@@ -166,10 +166,10 @@ void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int t
         else if (numDiff >= 7 && joueurs[j].nb_cartes > 7)
             printf(VERT_GRAS " (Flip 7) !" RESET);
  
-        printf("\n  " OR "SCORE TOTAL : %d" RESET "\n", joueurs[j].score_total);
+        printf("\n " OR "SCORE TOTAL : %d" RESET "\n", joueurs[j].score_total);
     }
  
-    printf("\n  " OR "────────────────────────────────────────────" RESET "\n");
+    printf("\n " OR "────────────────────────────────────────────" RESET "\n");
     printf(" Cartes restantes dans la pioche : %d\n", taille);
     printf(JAUNE_GRAS " %s est en tête avec %d points !" RESET "\n",
            joueurs[indexLeader].pseudo, joueurs[indexLeader].score_total);
@@ -188,17 +188,17 @@ void afficherFinPartie(joueur *joueurs, int nb_joueur, int taille) {
     getchar();
 
     // recherche du gagnant
-    int maxFinal     = -1;   // initialisé à -1 pour être sûr que n'importe quel score positif le dépasse
+    int maxFinal = -1;   // initialisé à -1 pour être sûr que n'importe quel score positif le dépasse
     int indexGagnant = 0;
     for (int j = 0; j < nb_joueur; j++) {
         if (joueurs[j].score_total > maxFinal) {
-            maxFinal     = joueurs[j].score_total;
+            maxFinal = joueurs[j].score_total;
             indexGagnant = j;
         }
     }
  
-    printf("\n " JAUNE_GRAS " 🏆 LE VAINQUEUR EST : %s !" RESET, joueurs[indexGagnant].pseudo);
-    printf("\n " BLANC_GRAS " Avec un score total de %d points." RESET "\n", maxFinal);
+    printf("\n " JAUNE_GRAS "🏆 LE VAINQUEUR EST : %s !" RESET, joueurs[indexGagnant].pseudo);
+    printf("\n " BLANC_GRAS "Avec un score total de %d points." RESET "\n", maxFinal);
     printf("\n" OR " ────────────────────────────────────────────" RESET "\n");
 
     // affiche tous les joueurs
