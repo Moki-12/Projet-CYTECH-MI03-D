@@ -5,7 +5,6 @@
 
 - [Introduction](#introduction)
 - [Règle du jeu](#règle-du-jeu)
-- [Pré-requis](#pré-requis)
 - [Guide d'installation](#guide-dinstallation)
 - [Structure du Projet](#structure-du-projet)
 - [Auteurs](#auteurs)
@@ -21,10 +20,6 @@ FlipTech est un jeu de cartes de prise de risque développé en langage C. Le bu
 - **Flip 7** : Collectionnez 7 numéros différents sans doublon pour obtenir un bonus de 15 points.
 - **Victoire** : Le premier joueur à atteindre 200 points ou à obtenir le plus de point une fois la pioche épuisée, gagne la partie.
 
-## Pré-requis
-
-* **GCC** (Compilateur C)
-* **Make**
 
 ## Guide d'installation 
 
