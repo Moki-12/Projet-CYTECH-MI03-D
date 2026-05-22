@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "carte.h"
  
-// crée toutes les cartes de la pioche 
+// création de toutes les cartes de la pioche 
 void creerPioche(cartes *tab) {
     int i = 0;
  
