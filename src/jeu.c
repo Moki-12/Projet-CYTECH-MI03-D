@@ -58,16 +58,16 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
  
                 if (joueurs[j].nbCartesManche >= 1) {  // n'affiche la main et les stats que si le joueur a déjà pioché au moins une carte cette manche
                     afficherMain(&joueurs[j]);
-                    printf( JAUNE_GRAS "\n  Votre score potentiel : %d " RESET "\n  ────────────────────────────────\n", joueurs[j].score_pot);
+                    printf( JAUNE_GRAS "\n  Votre score potentiel : %d " RESET "\n\n", joueurs[j].score_pot);
                     afficherStats(tab, n);
                     afficherRisque(&joueurs[j], tab, n, *taille);
                 }
  
                 do {
                     if (nb_tour <= 1)      // premier tour donc obligation de piocher on ne peux pas s'arrêter
-                        printf( JAUNE_GRAS " 🃏  %s que voulez vous faire ? Piocher : [1]\n " RESET , joueurs[j].pseudo);
+                        printf( JAUNE_GRAS " 👉  %s que voulez vous faire ? Piocher : [1]\n " RESET , joueurs[j].pseudo);
                     else
-                        printf( JAUNE_GRAS " 🃏  %s que voulez vous faire ?  Piocher : [1] ou S'arrêter : [2]\n " RESET , joueurs[j].pseudo);
+                        printf( JAUNE_GRAS " 👉  %s que voulez vous faire ?  Piocher : [1] ou S'arrêter : [2]\n " RESET , joueurs[j].pseudo);
                     verif = scanf("%d", &sortir);
                     vide_buffer();
                     printf(" ────────────────────────────────────────\n");
