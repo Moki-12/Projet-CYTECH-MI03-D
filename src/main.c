@@ -12,12 +12,12 @@ int main(void) {
  
     int nb_manche = 1;    // compteur de manches
     int TAILLE = 85;    // nombre total de cartes dans la pioche
-    int dernierePioche = 0;  // indice de la prochaine carte à piocher dans tab 
+    int dernierePioche = 0;  // indice de la prochaine carte à piocher dans la pioche 
     int fin  = 1;   // quand un joueur atteint 200 pts
     int nb_joueur;
     joueur *joueurs;
-    cartes tab[85];     // la pioche 
-    int verif;
+    cartes tab[85];     // tab correspond à la pioche 
+    int verif;           //robustesse
  
     creerPioche(tab);
     melanger(tab, TAILLE);
@@ -31,8 +31,7 @@ int main(void) {
         verif = scanf("%d", &nb_joueur);
         vide_buffer();
     } while (nb_joueur <= 0 || verif != 1);
- 
-    joueurs = malloc(nb_joueur * sizeof(joueur));
+    joueurs = malloc(nb_joueur * sizeof(joueur));    //création du tableau des joueurs
     if (joueurs == NULL) { printf("Erreur allocation\n"); return 1; }
  
     // Saisie des pseudos 
@@ -43,11 +42,11 @@ int main(void) {
         printf("\n Bienvenue %s !\n", joueurs[i].pseudo);
     }
  
-    // Initialisation des scores totaux 
+    // Initialisation des scores totaux en début de partie
     for (int a = 0; a < nb_joueur; a++) {
         joueurs[a].nb_cartes   = 0;  // aucune carte piochée au départ
         joueurs[a].score_total = 0;   // score cumulé sur toutes les manches
-        joueurs[a].debutManche = 0;
+        joueurs[a].debutManche = 0;   
     }
  
     // Boucle principale de la partie 
