@@ -43,7 +43,7 @@ void afficher_tour(joueur *j, int tour) {
     printf("\n");
     printf(ROUGE_GRAS " ┌──────────────────────────────────────────────────────────────────────────────┐" RESET "\n");
     printf(ROUGE_GRAS " │ " OR " AU TOUR DE %-20s" RESET, j->pseudo);
-    printf(ROUGE_GRAS "                                      Tour %d │" RESET "\n", tour);
+    printf(ROUGE_GRAS "                                    Tour %d   │" RESET "\n", tour);
     printf(ROUGE_GRAS " └──────────────────────────────────────────────────────────────────────────────┘" RESET "\n");
     printf("\n");
 }
