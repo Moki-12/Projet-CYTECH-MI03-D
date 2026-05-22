@@ -11,29 +11,29 @@ int compterNumeros(joueur *j) {
     return count;
 }
  
-// Calcule le score final d'un joueur pour la manche en cours 
+// Recalcule du score en fonction des cartes piochées dans la manche
 int calculerScoreFinal(joueur *j, int elimine) {
     int score = 0;
-    int debut = j->debutManche;
+    int debut = j->debutManche; //indice de la première carte piochée
     int fin   = j->debutManche + j->nbCartesManche;   // dernière carte de la main = première carte de la main + le nombre de cartes piochés durant la manche
  
-    if (fin > j->nb_cartes){
+    if (fin > j->nb_cartes){ // verife que fin ne depasse pas le nombre de cartes du joueur
      fin = j->nb_cartes;
     }
-    if (debut >= fin){       
+    if (debut >= fin){    
     return 0;
     }
  
-    // Les joueurs éliminés (doublon) ont un scire de 0
+    // Les joueurs éliminés (doublon) ont un score de 0
     if (elimine != 0){
      return 0;
     }
-    // Ajouter la valeur de la carte numéro au score  
+    // Ajouter la valeur de la carte numéro au score seulement pour les joueurs encore actifs 
     for (int i = debut; i < fin; i++)
         if (j->cartes[i].bonus[0] == '\0')
             score = effetNumero(j->cartes[i].numero, score);
  
-    // Ajouter la valeur de la carte bonus au score 
+    // Ajouter la valeur de la carte bonus au score pour tous les joueurs
     for (int i = debut; i < fin; i++)
         if (j->cartes[i].bonus[0] != '\0')
             score = effetBonus(j->cartes[i].bonus, score);
