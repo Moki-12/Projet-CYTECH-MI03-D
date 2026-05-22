@@ -21,7 +21,7 @@ void afficher_une_carte(cartes c, int ligne) {     // créer le design d'une car
     }
 }
  
-void afficher_ligne_carte(cartes *tab_cartes, int taille) {          // affiche taille cartes côte à côte  
+void afficher_ligne_carte(cartes *tab_cartes, int taille) {          // affiche taille cartes côte à côte (alignement)
     for (int ligne = 0; ligne < 5; ligne++) {           // 5 lignes pour dessiner une carte complète 
         for (int m = 0; m < taille; m++)
             afficher_une_carte(tab_cartes[m], ligne);  //chaque carte est dessinée ligne par ligne
@@ -56,7 +56,7 @@ void afficherMain(joueur *j) {
 
 //affiche le nombre de fois que chaque carte numéro est déjà sortie
 void afficherStats(cartes *tab, int n) {  
-    int compteur[13] = {0};  //initialise un tableau à 0 pour chaques cartes numéros
+    int compteur[13] = {0};  //créer un tableau qui compte le nombre d'apparition de chaque carte numéro
 
     // parcourt les n cartes déjà sorties et incrémente le compteur correspondant
     for (int i = 0; i < n; i++)
@@ -134,7 +134,7 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
         if (j->cartes[m].bonus[0] != '\0') {
             continue;    // on ignore les cartes bonus car elles ne créent pas de doublon
         }
-        
+        //affiche les cartes numéros dans la main du joueur
         int num_carte = j->cartes[m].numero;
         int restantes = num_carte - stats_danger[num_carte]; // total exemplaire - sorties
         if (restantes < 0) {
@@ -190,11 +190,12 @@ void afficherFinPartie(joueur *joueurs, int nb_joueur, int taille) {
     // recherche du gagnant
     int maxFinal = -1;   // initialisé à -1 pour être sûr que n'importe quel score positif le dépasse
     int indexGagnant = 0;
+ //si score du joueur est supérieur à max final alors max final devient score du joueur
     for (int j = 0; j < nb_joueur; j++) {
         if (joueurs[j].score_total > maxFinal) {
             maxFinal = joueurs[j].score_total;
             indexGagnant = j;
-        }
+        }  
     }
  
     printf("\n " JAUNE_GRAS "🏆 LE VAINQUEUR EST : %s !" RESET, joueurs[indexGagnant].pseudo);
