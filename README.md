@@ -11,7 +11,7 @@
 
 ## Introduction 
 
-FlipTech est un jeu de cartes de prise de risque développé en langage C. Le but est d'accumuler le plus de points possible sans piocher de doublons. Le programme gère les statistiques de la pioche en temps réel pour aider les joueurs dans leurs décisions. Ce projet a pour objectif de mettre en pratique la manipulation des structures, des tableaux de tableaux, des fichiers et l'affichage graphique en console.
+FlipTech est un jeu de cartes de prise de risque développé en langage C. Le but est d'accumuler le plus de points possible sans piocher de doublons. Le programme gère les statistiques de la pioche en temps réel pour aider les joueurs dans leurs décisions. Ce projet a pour objectif de mettre en pratique la manipulation des structures, des tableaux dynamiques, des fichiers et l'affichage graphique.
 
 ## Règles du Jeu 
 - **Pioche** : À chaque tour, chaque joueur décide de piocher une carte ou de s'arrêter.
@@ -59,7 +59,7 @@ make
 
 ## Auteurs
 ```markdown
--Raphaël Yoyotte
--Yasmine Mouchrif
--Saghina Robert
+- Raphaël Yoyotte
+- Yasmine Mouchrif
+- Saghina Robert
 ```
