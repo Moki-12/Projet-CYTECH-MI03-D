@@ -108,7 +108,7 @@ void manche(cartes *tab, int nb_joueur, joueur *joueurs, int *taille, int *derni
                     if (nbNumeros >= 7 && c.bonus[0] == '\0') {
                         printf("  " JAUNE_GRAS "★ FLIP 7 !" RESET "\n");
                         printf(" Vous venez de collecter 7 numéros différents ! Un bonus vous est accordé !\n");
-                        printf("\n  %d + " JAUNE_GRAS "15" RESET " = " BLANC_GRAS "%d" RESET "\n\n", joueurs[j].score_pot, joueurs[j].score_pot + 15);
+                        printf("\n  %d + " JAUNE_GRAS "15" RESET " = " BLANC_GRAS "%d points" RESET "\n\n", joueurs[j].score_pot, joueurs[j].score_pot + 15);
                         joueurs[j].flip7 = 1;
                         flip7 = 1;
                         n++;           // avance l'indice dans la pioche    
