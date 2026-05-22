@@ -155,7 +155,7 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
 }
  
 void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int taille) {
-    printf("\n  " MAGENTA_GRAS "📝  SCORES" RESET "\n");
+    printf("\n " MAGENTA_GRAS "📝  SCORES" RESET "\n");
     for (int j = 0; j < nb_joueur; j++) {
         printf("\n " BLANC_GRAS "★ %s" RESET, joueurs[j].pseudo);
         printf("\n Score manche : %d", joueurs[j].score_pot);
