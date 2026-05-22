@@ -123,8 +123,8 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
         }
     }
  
-    printf(" ───────────────────────────────────────────────────────────────────────\n");
-    printf(MAGENTA_GRAS " ANALYSE DU RISQUE \n\n" RESET);
+    printf("\n");
+    printf(MAGENTA_GRAS " ⚠️  ANALYSE DU RISQUE \n\n" RESET);
 
     int cartes_comptees = 0;
     printf(" Vous possédez dans votre main les cartes suivantes :\n");
@@ -151,7 +151,7 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
         risque = (cartes_comptees * 100.0f) / taille;
     }
     printf("\n Probabilité de doublon : %.1f%%\n", risque);
-    printf(" ────────────────────────────────────────────────────────────────────────\n\n");
+    printf("\n\n");
 }
  
 void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int taille) {
