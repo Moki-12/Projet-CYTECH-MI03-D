@@ -49,7 +49,7 @@ void afficher_tour(joueur *j, int tour) {
 }
  
 void afficherMain(joueur *j) {
-    printf(MAGENTA_GRAS " Vos cartes en main : (%d/7 numeros)\n" RESET, compterNumeros(j));
+    printf(MAGENTA_GRAS " 🃏  Vos cartes en main : (%d/7 numeros)\n" RESET, compterNumeros(j));
     int debutAff = j->nb_cartes - j->nbCartesManche;   //indice de la première carte de la manche
     afficher_ligne_carte(&j->cartes[debutAff], j->nbCartesManche);
 }
@@ -64,7 +64,7 @@ void afficherStats(cartes *tab, int n) {
             compteur[tab[i].numero]++;
  
     printf("\n");
-    printf(MAGENTA_GRAS " Statistiques de la pioche — cartes déjà sorties\n" RESET);
+    printf(MAGENTA_GRAS " 📊  Statistiques de la pioche — cartes déjà sorties\n" RESET);
  
     // première rangée : cartes 0 à 6 
     for (int ligne = 0; ligne < 5; ligne++) {
