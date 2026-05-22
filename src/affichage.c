@@ -150,7 +150,7 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
     if (taille > 0) {
         risque = (cartes_comptees * 100.0f) / taille;
     }
-    printf("\n Probabilité de doublon :" ROUGE_GRAS "%.1f%%\n" RESET , risque);
+    printf("\n Probabilité de doublon :" ROUGE_GRAS " %.1f%%\n" RESET , risque);
     printf("\n\n");
 }
  
