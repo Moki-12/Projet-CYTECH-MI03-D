@@ -53,9 +53,9 @@ make
 │   ├── joueur.c
 │   ├── sauvegarde.c
 │   └── main.c
-├── Rapport_Info_FlipTech.pdf
 ├── Makefile
-└── README.md
+├── README.md 
+└── Rapport_Info_FlipTech.pdf
 ```
 
 ## Auteurs
