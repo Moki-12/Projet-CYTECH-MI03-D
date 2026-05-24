@@ -23,7 +23,7 @@ void afficher_une_carte(cartes c, int ligne) {     // créer le design d'une car
  
 void afficher_ligne_carte(cartes *tab_cartes, int taille) { // affiche taille cartes côte à côte (alignement)
     if (tab_cartes == NULL || taille <= 0) { 
-       exit(1);
+       return;
     }
     for (int ligne = 0; ligne < 5; ligne++) {           // 5 lignes pour dessiner une carte complète 
         for (int m = 0; m < taille; m++)
@@ -62,7 +62,7 @@ void afficherMain(joueur *j) {
 //affiche le nombre de fois que chaque carte numéro est déjà sortie
 void afficherStats(cartes *tab, int n) {  
     if (tab == NULL || n <= 0) { 
-       exit(2);
+       return;
     }
     int compteur[13] = {0};  //créer un tableau qui compte le nombre d'apparition de chaque carte numéro
 
@@ -123,7 +123,7 @@ void afficher_cartepiocher(cartes c) {
  
 void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
     if (j == NULL || tab == NULL || n <= 0 || taille <= 0) { 
-       exit(3);
+       return;
     }
     int stats_danger[13] = {0};    // nombre d'exemplaires de chaque carte déjà sortis
 
@@ -166,7 +166,7 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
  
 void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int taille) {
     if (joueurs == NULL || nb_joueur <= 0 || taille <= 0 || indexLeader < 0) { 
-       exit(4);
+       return;
     }
     printf("\n " MAGENTA_GRAS "📝  SCORES" RESET "\n");
     for (int j = 0; j < nb_joueur; j++) {
@@ -191,7 +191,7 @@ void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int t
  
 void afficherFinPartie(joueur *joueurs, int nb_joueur, int taille) {
     if (joueurs == NULL || nb_joueur <= 0 || taille <= 0) { 
-       exit(5);
+       return;
     }
     printf("\n\n");
     printf(ROUGE_GRAS " FIN  DE  LA PARTIE" RESET "\n\n");
