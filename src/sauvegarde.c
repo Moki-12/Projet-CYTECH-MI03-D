@@ -3,7 +3,7 @@
 #include "sauvegarde.h"
  
 void CahierDesCharges(int nb_joueur, joueur *joueurs, char *nom_fichier) {
-    if (nb_joueur <= 0 || joueurs == NULL || nom_fichier == NULL) exit(1);
+    if (nb_joueur <= 0 || joueurs == NULL || nom_fichier == NULL) exit(17);
  
     char nomComplet[110];   // 100 (nom max) + 4 (".txt") + marge
     sprintf(nomComplet, "%s.txt", nom_fichier);
