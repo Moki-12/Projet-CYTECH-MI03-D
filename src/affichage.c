@@ -59,6 +59,7 @@ void afficherMain(joueur *j) {
 
 //affiche le nombre de fois que chaque carte numéro est déjà sortie
 void afficherStats(cartes *tab, int n) {  
+ if (tab == NULL) exit(1);
     int compteur[13] = {0};  //créer un tableau qui compte le nombre d'apparition de chaque carte numéro
 
     // parcourt les n cartes déjà sorties et incrémente le compteur correspondant
