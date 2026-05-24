@@ -22,6 +22,7 @@ void afficher_une_carte(cartes c, int ligne) {     // créer le design d'une car
 }
  
 void afficher_ligne_carte(cartes *tab_cartes, int taille) { // affiche taille cartes côte à côte (alignement)
+ if (tab_cartes == NULL) exit(1);
     for (int ligne = 0; ligne < 5; ligne++) {           // 5 lignes pour dessiner une carte complète 
         for (int m = 0; m < taille; m++)
             afficher_une_carte(tab_cartes[m], ligne);  //chaque carte est dessinée ligne par ligne
@@ -40,6 +41,7 @@ void afficher_accueil(void) {     // void en paramètre = sécurité contre les 
 }
  
 void afficher_tour(joueur *j, int tour) {
+ if (j == NULL) exit(1);
     printf("\n");
     printf(ROUGE_GRAS " ┌──────────────────────────────────────────────────────────────────────────────┐" RESET "\n");
     printf(ROUGE_GRAS " │ " OR " AU TOUR DE %-20s" RESET, j->pseudo);
@@ -49,6 +51,7 @@ void afficher_tour(joueur *j, int tour) {
 }
  
 void afficherMain(joueur *j) {
+ if (j == NULL) exit(1);
     printf(MAGENTA_GRAS " 🃏  Vos cartes en main : (%d/7 numeros)\n" RESET, compterNumeros(j));
     int debutAff = j->nb_cartes - j->nbCartesManche;   //indice de la première carte de la manche
     afficher_ligne_carte(&j->cartes[debutAff], j->nbCartesManche);
@@ -114,6 +117,7 @@ void afficher_cartepiocher(cartes c) {
 }
  
 void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
+ if (j == NULL) exit(1);
     int stats_danger[13] = {0};    // nombre d'exemplaires de chaque carte déjà sortis
 
     // Compte les cartes numéros déjà sorties de la pioche
@@ -154,6 +158,7 @@ void afficherRisque(joueur *j, cartes *tab, int n, int taille) {
 }
  
 void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int taille) {
+ if (joueurs == NULL) exit(1);
     printf("\n " MAGENTA_GRAS "📝  SCORES" RESET "\n");
     for (int j = 0; j < nb_joueur; j++) {
         printf("\n " BLANC_GRAS "★ %s" RESET, joueurs[j].pseudo);
@@ -176,6 +181,7 @@ void afficherScoresManche(joueur *joueurs, int nb_joueur, int indexLeader, int t
 }
  
 void afficherFinPartie(joueur *joueurs, int nb_joueur, int taille) {
+ if (joueurs == NULL) exit(1);
     printf("\n\n");
     printf(ROUGE_GRAS " FIN  DE  LA PARTIE" RESET "\n\n");
     if (taille <= 0)
