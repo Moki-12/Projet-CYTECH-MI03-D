@@ -4,7 +4,7 @@
  
 // création de toutes les cartes de la pioche 
 void creerPioche(cartes *tab) {
- if (tab == NULL) exit(1);
+ if (tab == NULL) exit(16);
     int i = 0;
  
     // numéro 0 et 1 en un seul exemplaire 
