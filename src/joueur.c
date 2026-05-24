@@ -13,7 +13,7 @@ int compterNumeros(joueur *j) {
  
 // Recalcule du score en fonction des cartes piochées dans la manche
 int calculerScoreFinal(joueur *j, int elimine) {
- if (j == NULL) exit(1);
+ if (j == NULL) exit(16);
     int score = 0;
     int debut = j->debutManche; //indice de la première carte piochée
     int fin   = j->debutManche + j->nbCartesManche;   // dernière carte de la main = première carte de la main + le nombre de cartes piochés durant la manche
