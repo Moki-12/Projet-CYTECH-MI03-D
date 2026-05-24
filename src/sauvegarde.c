@@ -9,15 +9,14 @@ void CahierDesCharges(int nb_joueur, joueur *joueurs, char *nom_fichier) {
     sprintf(nomComplet, "%s.txt", nom_fichier);
  
     FILE *f = fopen(nomComplet, "w");
-    if (!f) {
+    if (f == NULL) {
         printf("Erreur : Impossible de créer le fichier %s\n", nomComplet);
         return;
     }
  
     for (int i = 0; i < nb_joueur; i++) {
         // affichage pseudo et score total
-        fprintf(f, " Joueur : %s | Score Final : %d\n",
-                joueurs[i].pseudo, joueurs[i].score_total);
+        fprintf(f, " Joueur : %s | Score Final : %d\n", joueurs[i].pseudo, joueurs[i].score_total);
 
         // liste toutes les cartes piochées durant toute la partie
         fprintf(f, " Cartes obtenues : ");
