@@ -2,7 +2,7 @@
 #include "carte.h"
 #include "joueur.h"
 #include "affichage.h"
- 
+#include <stdlib.h>
 void afficher_une_carte(cartes c, int ligne) {     // créer le design d'une carte sur une même ligne
     if (ligne == 0) {
         printf(" " OR "┌─────┐" RESET);
